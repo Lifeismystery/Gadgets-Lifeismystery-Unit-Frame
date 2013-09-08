@@ -1,0 +1,31 @@
+Identifier = "LifeismysteryUF"
+
+Name = "LifeismysteryUnitFrame"
+Description = "Lifeismystery Unit Frame for use with Gadgets."
+Website = "http://www.riftgame.com"
+Email = "Lifeismystery@yandex.ru"
+
+Version = "1.0.0"
+
+Environment = "1.9"
+
+RunOnStartup = 
+{
+  "templates/LifeismysteryRaidFrame.lua",
+  "templates/LifeismysteryUnitFrame.lua",
+}
+
+SavedVariables = 
+{
+
+}
+
+Embed = 
+{
+
+}
+
+Dependencies = 
+{
+	Gadgets = {"required", "before"},
+}
