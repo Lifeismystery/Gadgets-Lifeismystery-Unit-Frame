@@ -31,7 +31,7 @@ function LifeismysteryRaidFrame:Construct(options)
 				color={r=0,g=0,b=0,a=0},
 				FrameAlpha = 1,
 				FrameAlphaBinding="FrameAlpha",
-				BorderColorBinding="BorderColor", border=true, BorderColor = {r=0,g=0,b=0,a=1},
+				BorderColorBinding="BorderColor", border=true, BorderColor={r=0,g=0,b=0,a=1},
 			}, 
 			{
 				-- Generic Element Configuration
