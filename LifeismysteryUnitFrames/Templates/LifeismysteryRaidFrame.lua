@@ -11,7 +11,6 @@ LifeismysteryRaidFrame.Configuration.Height = 20
 LifeismysteryRaidFrame.Configuration.Resizable = { 55, 40, 500, 70 }
 LifeismysteryRaidFrame.Configuration.SupportsHoTPanel = true
 LifeismysteryRaidFrame.Configuration.SupportsDebuffPanel = true
---LifeismysteryRaidFrame.Configuration.SupportsHoTTracking = true
 
 --------------------------------------------------------------
 function LifeismysteryRaidFrame:Construct(options)
@@ -24,14 +23,14 @@ function LifeismysteryRaidFrame:Construct(options)
 				id="frameBackdrop", type="Frame", parent="frame", layer=1, --alpha=1,
 				attach = 
 				{ 
-					{ point="TOPLEFT", element="frame", targetPoint="TOPLEFT", offsetX=0, offsetY=0, },
-					{ point="BOTTOMRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=0, } 
+					{ point="TOPLEFT", element="frame", targetPoint="TOPLEFT", offsetX=1, offsetY=-1, },
+					{ point="BOTTOMRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-1, offsetY=1, } 
 				},            				
 				visibilityBinding="id", 
 				color={r=0,g=0,b=0,a=0},
 				FrameAlpha = 1,
 				FrameAlphaBinding="FrameAlpha",
-				BorderColorBinding="BorderColor", border=true, BorderColor={r=0,g=0,b=0,a=1},
+				BorderColorBinding="BorderColor", border=true, BorderColor = {r=0,g=0,b=0,a=1},
 			}, 
 			{
 				-- Generic Element Configuration
@@ -47,8 +46,20 @@ function LifeismysteryRaidFrame:Construct(options)
 				raidHealthColor2={r=0.5,g=0,b=0, a=0.8},
 				colorBinding="raidHealthColor2",				
 			--	border=true, BorderColorBinding="BorderColor2", BorderColor2 = {r=0,g=0,b=0,a=1},
-			},	
+			},
 			{
+				id="healthCap", type="HealthCap", parent="barHealth", layer=15,
+				attach = {
+					{ point="TOPLEFT", element="barHealth", targetPoint="TOPLEFT" },
+					{ point="BOTTOMRIGHT", element="barHealth", targetPoint="BOTTOMRIGHT" },
+				},
+				growthDirection="left",
+				visibilityBinding="healthCap",
+				binding="healthCapPercent",
+				color={r=0.5, g=0, b=0, a=0.8},
+				media="wtGlaze",
+				},			
+				{
 				-- Generic Element Configuration
 				id="border", type="BarHealth", parent="frameBackdrop", layer=10, alpha=1,
 				attach = {
@@ -199,8 +210,8 @@ function LifeismysteryRaidFrame:Construct(options)
 	self:SetSecureMode("restricted")
 	self:SetMouseoverUnit(self.UnitSpec)
 	self:SetMouseMasking("limited")	
-	if options.clickToTarget then
-		self.Event.LeftClick = "target @" .. self.UnitSpec
+	if options.clickToTarget then 
+		self:EventMacroSet(Event.UI.Input.Mouse.Left.Click, "target @" .. self.UnitSpec)
 	end
 	if options.contextMenu then
 		self.Event.RightClick = function() if self.UnitId then Command.Unit.Menu(self.UnitId) end end

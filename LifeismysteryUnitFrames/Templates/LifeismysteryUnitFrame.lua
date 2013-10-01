@@ -67,7 +67,19 @@ function LifeismysteryUnitFrame:Construct(options)
 				backgroundColorUnit={r=0.07, g=0.07, b=0.07, a=0.9},
                 backgroundColorBinding="backgroundColorUnit",							
 				UnitHealthColor2={r=0.5,g=0,b=0, a=0.8},
-				colorBinding="UnitHealthColor2",
+				colorBinding="UnitHealthColor2", 
+			},
+			{
+			id="healthCap", type="HealthCap", parent="barHealth", layer=15,
+			attach = {
+				{ point="TOPLEFT", element="barHealth", targetPoint="TOPLEFT" },
+				{ point="BOTTOMRIGHT", element="barHealth", targetPoint="BOTTOMRIGHT" },
+			},
+			growthDirection="left",
+			visibilityBinding="healthCap",
+			binding="healthCapPercent",
+			color={r=0.5, g=0, b=0, a=0.8},
+			media="wtGlaze",
 			},
 			{
 				-- Generic Element Configuration
