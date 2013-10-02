@@ -13,6 +13,7 @@ RunOnStartup =
 {
   "templates/LifeismysteryRaidFrame.lua",
   "templates/LifeismysteryUnitFrame.lua",
+  "templates/LifeismysteryTargetOfTarget.lua",
 }
 
 SavedVariables = 
