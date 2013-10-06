@@ -8,8 +8,8 @@ LifeismysteryGroupFrame.Configuration.Name = "Lifeismystery Group Frame"
 LifeismysteryGroupFrame.Configuration.RaidSuitable = true
 LifeismysteryGroupFrame.Configuration.FrameType = "Frame"
 LifeismysteryGroupFrame.Configuration.Width = 200
-LifeismysteryGroupFrame.Configuration.Height = 40
-LifeismysteryGroupFrame.Configuration.Resizable = { 40, 40, 700, 100 }
+LifeismysteryGroupFrame.Configuration.Height = 45
+LifeismysteryGroupFrame.Configuration.Resizable = { 45, 40, 700, 100 }
 
 --------------------------------------------------------------
 function LifeismysteryGroupFrame:Construct(options)
@@ -79,7 +79,7 @@ function LifeismysteryGroupFrame:Construct(options)
 				-- Type Specific Element Configuration
 				binding="resourcePercent", colorBinding="resourceColor",
 				media="wtGlaze", 
-				backgroundColor={r=0.07, g=0.07, b=0.07, a=0.9},
+				backgroundColor={r=0.07, g=0.07, b=0.07, a=0.85},
 			},
 			{
 				-- Generic Element Configuration
@@ -124,12 +124,20 @@ function LifeismysteryGroupFrame:Construct(options)
 			},		
 			{
 				-- Generic Element Configuration
-				id="labelName", type="Label", parent="frame", layer=20,
+				id="labellvl", type="Label", parent="frame", layer=20,
 				attach = {{ point="TOPLEFT", element="border", targetPoint="TOPLEFT", offsetX=4, offsetY=-14 }},
 				visibilityBinding="name",
-				text="{level} {name}", default="", outline=true, fontSize=14,
+				text="{level}", default="", outline=true, fontSize=14,
 				colorBinding="callingColor",
-			},
+			},			
+			{
+				-- Generic Element Configuration
+				id="labelName", type="Label", parent="frame", layer=20,
+				attach = {{ point="TOPLEFT", element="border", targetPoint="TOPLEFT", offsetX=23, offsetY=-14 }},
+				visibilityBinding="name",
+				text="{name}", default="", outline=true, fontSize=14,
+				colorBinding="callingColor",
+			}, 
 			{
 				-- Generic Element Configuration
 				id="labelStatus", type="Label", parent="frameBackdrop", layer=20,
