@@ -14,6 +14,7 @@ RunOnStartup =
   "templates/LifeismysteryRaidFrame.lua",
   "templates/LifeismysteryUnitFrame.lua",
   "templates/LifeismysteryTargetOfTarget.lua",
+  "templates/LifeismysteryGroupFrame.lua",
 }
 
 SavedVariables = 

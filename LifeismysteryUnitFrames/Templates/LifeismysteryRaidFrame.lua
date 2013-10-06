@@ -20,7 +20,7 @@ function LifeismysteryRaidFrame:Construct(options)
 		{
 			{
 				-- Generic Element Configuration
-				id="frameBackdrop", type="Frame", parent="frame", layer=1, --alpha=1,
+				id="frameBackdrop", type="Frame", parent="frame", layer=0, --alpha=1,
 				attach = 
 				{ 
 					{ point="TOPLEFT", element="frame", targetPoint="TOPLEFT", offsetX=1, offsetY=-1, },
@@ -30,7 +30,6 @@ function LifeismysteryRaidFrame:Construct(options)
 				color={r=0,g=0,b=0,a=0},
 				FrameAlpha = 1,
 				FrameAlphaBinding="FrameAlpha",
-				BorderColorBinding="BorderColor", border=true, BorderColor = {r=0,g=0,b=0,a=1},
 			}, 
 			{
 				-- Generic Element Configuration
@@ -45,7 +44,6 @@ function LifeismysteryRaidFrame:Construct(options)
                 backgroundColorBinding="backgroundColor",				
 				raidHealthColor2={r=0.5,g=0,b=0, a=0.8},
 				colorBinding="raidHealthColor2",				
-			--	border=true, BorderColorBinding="BorderColor2", BorderColor2 = {r=0,g=0,b=0,a=1},
 			},
 			{
 				id="healthCap", type="HealthCap", parent="barHealth", layer=15,
@@ -58,8 +56,8 @@ function LifeismysteryRaidFrame:Construct(options)
 				binding="healthCapPercent",
 				color={r=0.5, g=0, b=0, a=0.8},
 				media="wtGlaze",
-				},			
-				{
+			},			
+			{
 				-- Generic Element Configuration
 				id="border", type="BarHealth", parent="frameBackdrop", layer=10, alpha=1,
 				attach = {
@@ -70,6 +68,18 @@ function LifeismysteryRaidFrame:Construct(options)
 				backgroundColor={r=0, g=0, b=0, a=0},				
 				Color={r=0,g=0,b=0, a=0},
 				border=true, BorderColorBinding="BorderColor2", BorderColor2 = {r=0,g=0,b=0,a=1},
+			},	
+			{
+				-- Generic Element Configuration
+				id="borderTarget", type="BarHealth", parent="frameBackdrop", layer=10, alpha=1,
+				attach = {
+					{ point="TOPLEFT", element="frame", targetPoint="TOPLEFT", offsetX=1, offsetY=1 },
+					{ point="BOTTOMRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-1, offsetY=-1 },
+				},
+				binding="width",
+				backgroundColor={r=0, g=0, b=0, a=0},				
+				Color={r=0,g=0,b=0, a=0},
+				border=true, BorderColorBinding="BorderColor", BorderColor = {r=0,g=0,b=0,a=1},
 			},				
 		--[[	{
 				-- Generic Element Configuration
@@ -210,11 +220,14 @@ function LifeismysteryRaidFrame:Construct(options)
 	self:SetSecureMode("restricted")
 	self:SetMouseoverUnit(self.UnitSpec)
 	self:SetMouseMasking("limited")	
+	
 	if options.clickToTarget then 
 		self:EventMacroSet(Event.UI.Input.Mouse.Left.Click, "target @" .. self.UnitSpec)
 	end
 	if options.contextMenu then
-		self.Event.RightClick = function() if self.UnitId then Command.Unit.Menu(self.UnitId) end end
+		self:EventAttach(Event.UI.Input.Mouse.Right.Click, function(self, h)
+			if self.UnitId then Command.Unit.Menu(self.UnitId) end
+		end, "Event.UI.Input.Mouse.Right.Click")
 	end 
 	
  end  
