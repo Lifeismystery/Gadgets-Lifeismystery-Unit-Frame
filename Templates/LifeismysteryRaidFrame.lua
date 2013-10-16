@@ -40,8 +40,8 @@ function LifeismysteryRaidFrame:Construct(options)
 				},
 				growthDirection="left",
 				binding="healthPercent",
-				backgroundColor={r=0.07, g=0.07, b=0.07, a=0.9},
-                backgroundColorBinding="backgroundColor",				
+				backgroundColorUnit={r=0.07, g=0.07, b=0.07, a=0.9},
+                backgroundColorBinding="backgroundColorUnit",				
 				raidHealthColor2={r=0.5,g=0,b=0, a=0.8},
 				colorBinding="raidHealthColor2",				
 			},
@@ -67,20 +67,10 @@ function LifeismysteryRaidFrame:Construct(options)
 				binding="width",
 				backgroundColor={r=0, g=0, b=0, a=0},				
 				Color={r=0,g=0,b=0, a=0},
-				border=true, BorderColorBinding="BorderColor2", BorderColor2 = {r=0,g=0,b=0,a=1},
-			},	
-			{
-				-- Generic Element Configuration
-				id="borderTarget", type="BarHealth", parent="frameBackdrop", layer=10, alpha=1,
-				attach = {
-					{ point="TOPLEFT", element="frame", targetPoint="TOPLEFT", offsetX=1, offsetY=1 },
-					{ point="BOTTOMRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-1, offsetY=-1 },
-				},
-				binding="width",
-				backgroundColor={r=0, g=0, b=0, a=0},				
-				Color={r=0,g=0,b=0, a=0},
 				border=true, BorderColorBinding="BorderColor", BorderColor = {r=0,g=0,b=0,a=1},
-			},				
+				borderTextureTarget=true, BorderTextureTargetVisibleBinding="BorderTextureTargetVisible", BorderTextureTargetVisible=true,
+				borderTextureAggro=true, BorderTextureAggroVisibleBinding="BorderTextureAggroVisible", BorderTextureAggroVisible=true,
+			},			
 		--[[	{
 				-- Generic Element Configuration
 				id="barResource", type="Bar", parent="frameBackdrop", layer=11,
@@ -97,8 +87,8 @@ function LifeismysteryRaidFrame:Construct(options)
 			{
 				id="barAbsorb", type="Bar", parent="frameBackdrop", layer=12,
 				attach = {
-					{ point="BOTTOMLEFT", element="frame", targetPoint="BOTTOMLEFT", offsetX=2, offsetY=-2 },
-					{ point="TOPRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-2, offsetY=-4 },
+					{ point="BOTTOMLEFT", element="frame", targetPoint="BOTTOMLEFT", offsetX=2, offsetY=-3 },
+					{ point="TOPRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-2, offsetY=-7 },
 				},
 				media="wtGlaze", 
 				growthDirection="right",
@@ -124,8 +114,8 @@ function LifeismysteryRaidFrame:Construct(options)
 				-- Generic Element Configuration
 				id="labelStatus", type="Label", parent="frameBackdrop", layer=20,
 				attach = {{ point="BOTTOMCENTER", element="frame", targetPoint="BOTTOMCENTER", offsetX=0, offsetY=-4 }},
-				visibilityBinding="raidStatus2",
-				text=" {raidStatus2}", default="", fontSize=11, outline = true,
+				visibilityBinding="UnitStatus",
+				text=" {UnitStatus}", default="", fontSize=11, outline = true,
 			},
 			{
 			    id="imgMark", type="MediaSet", parent="frameBackdrop", layer=30,
@@ -165,9 +155,7 @@ function LifeismysteryRaidFrame:Construct(options)
 			{
 				-- Generic Element Configuration
 				id="buffPanelDebuffs", type="BuffPanel", semantic="DebuffPanel", parent="frameBackdrop", layer=30,
-				attach = {{ point="BOTTOMRIGHT", element="frameBackdrop", targetPoint="BOTTOMRIGHT", offsetX=-1, offsetY=-1 }},
-				--visibilityBinding="id",
-				-- Type Specific Element Configuration
+				attach = {{ point="BOTTOMRIGHT", element="frameBackdrop", targetPoint="BOTTOMRIGHT", offsetX=-1, offsetY=-3 }},
 				rows=1, cols=6, iconSize=16, iconSpacing=1, borderThickness=1,
 				auraType="debuff", 
 				growthDirection = "left_up",
@@ -177,7 +165,7 @@ function LifeismysteryRaidFrame:Construct(options)
 			},
 			{
 				id="buffPanelHoTs", type="BuffPanel", semantic="HoTPanel", parent="frameBackdrop", layer=30,
-				attach = {{ point="TOPRIGHT", element="frameBackdrop", targetPoint="TOPRIGHT", offsetX=-1, offsetY=1 }},
+				attach = {{ point="TOPRIGHT", element="frameBackdrop", targetPoint="TOPRIGHT", offsetX=-1, offsetY=3 }},
 				rows=1, cols=6, iconSize=16, iconSpacing=0, borderThickness=1,
 				auraType="hot",selfCast=true, 
 				timer = true, timerSize = 11, outline=true, color={r=1,g=1,b=0,a=1}, 
@@ -231,24 +219,6 @@ function LifeismysteryRaidFrame:Construct(options)
 	end 
 	
  end  
-
-WT.Unit.CreateVirtualProperty("FrameAlpha", { "id", "blockedOrOutOfRange"},
-	function(unit)
-		if unit.blockedOrOutOfRange then
-			return {alpha=0.4}	
-		else	
-			return {alpha=1}
-		end
-	end)
-	
-WT.Unit.CreateVirtualProperty("BorderColor", { "playerTarget"},
-	function(unit)
-		if unit.playerTarget then
-			return  { r=1, g=1, b=1, a=1 }
-		else
-			return { r=0, g=0, b=0, a=0 }
-		end
-	end)
 	
 	
 WT.Unit.CreateVirtualProperty("raidHealthColor2", { "id"},
@@ -258,39 +228,4 @@ WT.Unit.CreateVirtualProperty("raidHealthColor2", { "id"},
 		else	
 			return {r=0,g=0,b=0, a=0}
 		end
-	end)
-
-WT.Unit.CreateVirtualProperty("backgroundColor", { "id", "cleansable"},
-	function(unit)
-		if unit.cleansable then
-			return { r=0.2, g=0.15, b=0.4, a=0.8 }
-		else
-			return {r=0.07,g=0.07,b=0.07, a=0.85}
-		end
 	end)	
-	
-WT.Unit.CreateVirtualProperty("BorderColor2", { "id", "aggro"},
-	function(unit)
-		if not unit.id then
-			return { r = 0, g=0, b = 0, a=0 }
-		elseif unit.aggro  then
-			return { r=1, g=0, b =0, a=1 }
-		elseif not unit.aggro and unit.id then
-			return { r = 0, g=0, b = 0, a=1 }
-		end
-	end)
-	
-WT.Unit.CreateVirtualProperty("raidStatus2", { "offline", "afk", "health" },
-	function(unit)
-		if unit.offline then
-			return "offline"
-		elseif unit.afk then
-			return "afk"
-		elseif unit.health and unit.health == 0 then
-			return "dead"
-		else
-			return ""
-		end
-	end)
-	
-	

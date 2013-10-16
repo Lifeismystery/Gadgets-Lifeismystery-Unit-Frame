@@ -26,8 +26,8 @@ function LifeismysteryGroupFrame:Construct(options)
 					{ point="BOTTOMRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=0, } 
 				},            				
 				visibilityBinding="id",
-				FrameAlphaUnit2 = 1,
-				FrameAlphaBinding="FrameAlphaUnit2",				
+				FrameAlpha = 1,
+				FrameAlphaBinding="FrameAlpha",				
 			}, 
 			{
 				-- Generic Element Configuration
@@ -39,7 +39,9 @@ function LifeismysteryGroupFrame:Construct(options)
 				binding="width",
 				backgroundColor={r=0, g=0, b=0, a=0},				
 				Color={r=0,g=0,b=0, a=0},
-				border=true, BorderColorBinding="BorderColorUnit2", BorderColorUnit2 = {r=0,g=0,b=0,a=1},
+				border=true, BorderColorBinding="BorderColor", BorderColor = {r=0,g=0,b=0,a=1},
+				borderTextureTarget=true, BorderTextureTargetVisibleBinding="BorderTextureTargetVisible", BorderTextureTargetVisible=true,
+				borderTextureAggro=true, BorderTextureAggroVisibleBinding="BorderTextureAggroVisible", BorderTextureAggroVisible=true,
 			},	
 			{
 				-- Generic Element Configuration
@@ -51,8 +53,8 @@ function LifeismysteryGroupFrame:Construct(options)
 				growthDirection="left",
 				binding="healthPercent",
 			--	media="wtGlaze", 
-				backgroundColorUnit2={r=0.07, g=0.07, b=0.07, a=0.9},
-                backgroundColorBinding="backgroundColorUnit2",							
+				backgroundColorUnit={r=0.07, g=0.07, b=0.07, a=0.9},
+                backgroundColorBinding="backgroundColorUnit",							
 				GroupHealthColor={r=0.5,g=0,b=0, a=0.8},
 				colorBinding="GroupHealthColor", 
 			},
@@ -142,8 +144,8 @@ function LifeismysteryGroupFrame:Construct(options)
 				-- Generic Element Configuration
 				id="labelStatus", type="Label", parent="frameBackdrop", layer=20,
 				attach = {{ point="BOTTOMCENTER", element="frame", targetPoint="BOTTOMCENTER", offsetX=0, offsetY=-4 }},
-				visibilityBinding="UnitStatus3",
-				text=" {UnitStatus3}", default="", fontSize=11, outline = true,
+				visibilityBinding="UnitStatus",
+				text=" {UnitStatus}", default="", fontSize=11, outline = true,
 			},
 			{
 			    id="imgMark", type="MediaSet", parent="frameBackdrop", layer=30,
@@ -256,14 +258,7 @@ function LifeismysteryGroupFrame:Construct(options)
 	
  end  
 
-WT.Unit.CreateVirtualProperty("FrameAlphaUnit1", { "id", "blockedOrOutOfRange"},
-	function(unit)
-		if unit.blockedOrOutOfRange then
-			return {alpha=0.4}	
-		else	
-			return {alpha=1}
-		end
-	end) 
+
 
 WT.Unit.CreateVirtualProperty("GroupHealthColor", { "id"},
 	function(unit)
@@ -271,15 +266,6 @@ WT.Unit.CreateVirtualProperty("GroupHealthColor", { "id"},
 			return { r=0.5, g=0, b=0, a=0.8 }
 		else
 			return {r=0,g=0,b=0, a=0}
-		end
-	end)
-
-WT.Unit.CreateVirtualProperty("backgroundColorUnit2", { "id", "cleansable"},
-	function(unit)
-		if unit.cleansable then
-			return { r=0.2, g=0.15, b=0.4, a=0.8 }
-		else
-			return {r=0.07,g=0.07,b=0.07, a=0.8}
 		end
 	end)	
 	
@@ -291,18 +277,5 @@ WT.Unit.CreateVirtualProperty("BorderColorUnit2", { "id", "aggro" },
 			return { r=1, g=0, b =0, a=1 }
 		elseif not unit.aggro and unit.id then
 			return { r = 0, g=0, b = 0, a=1 }
-		end
-	end)
-	
-WT.Unit.CreateVirtualProperty("UnitStatus3", { "offline", "afk", "health" },
-	function(unit)
-		if unit.offline then
-			return "offline"
-		elseif unit.afk then
-			return "afk"
-		elseif unit.health and unit.health == 0 then
-			return "dead"
-		else
-			return ""
 		end
 	end)

@@ -26,8 +26,8 @@ function LifeismysteryTargetOfTarget:Construct(options)
 					{ point="BOTTOMRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=0, } 
 				},            				
 				visibilityBinding="id",
-				FrameAlphaUnit = 1,
-				FrameAlphaBinding="FrameAlphaUnit2",				
+				FrameAlpha = 1,
+				FrameAlphaBinding="FrameAlpha",				
 			}, 
 			{
 				-- Generic Element Configuration
@@ -55,16 +55,16 @@ function LifeismysteryTargetOfTarget:Construct(options)
 				colorBinding="UnitHealthColor2",
 			},	
 			{
-			id="healthCap", type="HealthCap", parent="barHealth", layer=15,
-			attach = {
-				{ point="TOPLEFT", element="barHealth", targetPoint="TOPLEFT" },
-				{ point="BOTTOMRIGHT", element="barHealth", targetPoint="BOTTOMRIGHT" },
-			},
-			growthDirection="left",
-			visibilityBinding="healthCap",
-			binding="healthCapPercent",
-			color={r=0.5, g=0, b=0, a=0.8},
-			media="wtGlaze",
+				id="healthCap", type="HealthCap", parent="barHealth", layer=15,
+				attach = {
+					{ point="TOPLEFT", element="barHealth", targetPoint="TOPLEFT" },
+					{ point="BOTTOMRIGHT", element="barHealth", targetPoint="BOTTOMRIGHT" },
+				},
+				growthDirection="left",
+				visibilityBinding="healthCap",
+				binding="healthCapPercent",
+				color={r=0.5, g=0, b=0, a=0.8},
+				media="wtGlaze",
 			},			
 			{
 				-- Generic Element Configuration
@@ -121,15 +121,6 @@ function LifeismysteryTargetOfTarget:Construct(options)
 	end
 	
  end  
-
-WT.Unit.CreateVirtualProperty("FrameAlphaUnit2", { "id", "blockedOrOutOfRange"},
-	function(unit)
-		if unit.blockedOrOutOfRange then
-			return {alpha=0.4}	
-		else	
-			return {alpha=1}
-		end
-	end) 
 
 WT.Unit.CreateVirtualProperty("UnitHealthColor3", { "id"},
 	function(unit)

@@ -26,8 +26,8 @@ function LifeismysteryUnitFrame:Construct(options)
 					{ point="BOTTOMRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=0, } 
 				},            				
 				visibilityBinding="id",
-				FrameAlphaUnit = 1,
-				FrameAlphaBinding="FrameAlphaUnit",				
+				FrameAlpha = 1,
+				FrameAlphaBinding="FrameAlpha",				
 			}, 
 			{
 				-- Generic Element Configuration
@@ -40,6 +40,7 @@ function LifeismysteryUnitFrame:Construct(options)
 				backgroundColor={r=0, g=0, b=0, a=0},				
 				Color={r=0,g=0,b=0, a=0},
 				border=true, BorderColorBinding="BorderColorUnit", BorderColorUnit = {r=0,g=0,b=0,a=1},
+				borderTextureAggro=true, BorderTextureAggroVisibleBinding="BorderTextureAggroVisible", BorderTextureAggroVisible=true,
 			},	
 			{
 				-- Generic Element Configuration
@@ -134,8 +135,8 @@ function LifeismysteryUnitFrame:Construct(options)
 				-- Generic Element Configuration
 				id="labelStatus", type="Label", parent="frameBackdrop", layer=20,
 				attach = {{ point="BOTTOMCENTER", element="frame", targetPoint="BOTTOMCENTER", offsetX=0, offsetY=-4 }},
-				visibilityBinding="UnitStatus2",
-				text=" {UnitStatus2}", default="", fontSize=11, outline = true,
+				visibilityBinding="UnitStatus",
+				text=" {UnitStatus}", default="", fontSize=11, outline = true,
 			},
 			{
 			    id="imgMark", type="MediaSet", parent="frameBackdrop", layer=30,
@@ -250,30 +251,12 @@ function LifeismysteryUnitFrame:Construct(options)
 	
  end  
 
-WT.Unit.CreateVirtualProperty("FrameAlphaUnit", { "id", "blockedOrOutOfRange"},
-	function(unit)
-		if unit.blockedOrOutOfRange then
-			return {alpha=0.4}	
-		else	
-			return {alpha=1}
-		end
-	end) 
-
 WT.Unit.CreateVirtualProperty("UnitHealthColor2", { "id"},
 	function(unit)
 		if unit.id then
 			return { r=0.5, g=0, b=0, a=0.8 }
 		else
 			return {r=0,g=0,b=0, a=0}
-		end
-	end)
-
-WT.Unit.CreateVirtualProperty("backgroundColorUnit", { "id", "cleansable"},
-	function(unit)
-		if unit.cleansable then
-			return { r=0.2, g=0.15, b=0.4, a=0.8 }
-		else
-			return {r=0.07,g=0.07,b=0.07, a=0.8}
 		end
 	end)	
 	
@@ -285,18 +268,5 @@ WT.Unit.CreateVirtualProperty("BorderColorUnit", { "id", "aggro" },
 			return { r=1, g=0, b =0, a=1 }
 		elseif not unit.aggro and unit.id then
 			return { r = 0, g=0, b = 0, a=1 }
-		end
-	end)
-	
-WT.Unit.CreateVirtualProperty("UnitStatus2", { "offline", "afk", "health" },
-	function(unit)
-		if unit.offline then
-			return "offline"
-		elseif unit.afk then
-			return "afk"
-		elseif unit.health and unit.health == 0 then
-			return "dead"
-		else
-			return ""
 		end
 	end)
