@@ -2,17 +2,16 @@ local toc, data = ...
 local AddonId = toc.identifier
 
 -- Frame Configuration Options --------------------------------------------------
-local LifeismysteryUnitFrame = WT.UnitFrame:Template("LifeismysteryUnitFrame")
-LifeismysteryUnitFrame.Configuration.Name = "Lifeismystery Unit Frame ()"
-LifeismysteryUnitFrame.Configuration.RaidSuitable = false
-LifeismysteryUnitFrame.Configuration.UnitSuitable = true
-LifeismysteryUnitFrame.Configuration.FrameType = "Frame"
-LifeismysteryUnitFrame.Configuration.Width = 250
-LifeismysteryUnitFrame.Configuration.Height = 40
-LifeismysteryUnitFrame.Configuration.Resizable = { 10, 10, 500, 100 }
+local LifeismysteryGroupFrame2 = WT.UnitFrame:Template("LifeismysteryGroupFrame2")
+LifeismysteryGroupFrame2.Configuration.Name = "Lifeismystery Group Frame2(big resource bar)"
+LifeismysteryGroupFrame2.Configuration.RaidSuitable = true
+LifeismysteryGroupFrame2.Configuration.FrameType = "Frame"
+LifeismysteryGroupFrame2.Configuration.Width = 200
+LifeismysteryGroupFrame2.Configuration.Height = 45
+LifeismysteryGroupFrame2.Configuration.Resizable = { 45, 40, 700, 100 }
 
 --------------------------------------------------------------
-function LifeismysteryUnitFrame:Construct(options)
+function LifeismysteryGroupFrame2:Construct(options)
 	local template =
 	{
 		elements = 
@@ -37,22 +36,23 @@ function LifeismysteryUnitFrame:Construct(options)
 				binding="width",
 				backgroundColor={r=0, g=0, b=0, a=0},				
 				Color={r=0,g=0,b=0, a=0},
-				border=true, BorderColorBinding="BorderColorUnit", BorderColorUnit = {r=0,g=0,b=0,a=1},
+				border=true, BorderColorBinding="BorderColor", BorderColor = {r=0,g=0,b=0,a=1},
+				borderTextureTarget=true, BorderTextureTargetVisibleBinding="BorderTextureTargetVisible", BorderTextureTargetVisible=true,
 				borderTextureAggro=true, BorderTextureAggroVisibleBinding="BorderTextureAggroVisible", BorderTextureAggroVisible=true,
 			},	
 			{
 				id="barHealth", type="BarHealth", parent="frameBackdrop", layer=10,
 				attach = {
 					{ point="TOPLEFT", element="frame", targetPoint="TOPLEFT", offsetX=2, offsetY=2 },
-					{ point="BOTTOMRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-2, offsetY=-26 },
+					{ point="BOTTOMRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-2, offsetY=-20 },
 				},
 				growthDirection="left",
 				binding="healthPercent",
 				media="shadow", 
 				backgroundColorUnit={r=0.07, g=0.07, b=0.07, a=0.85},
                 backgroundColorBinding="backgroundColorUnit",							
-				UnitHealthColor2={r=0.5,g=0,b=0, a=0.8},
-				colorBinding="UnitHealthColor2", 
+				GroupHealthColor2={r=0.5,g=0,b=0, a=0.8},
+				colorBinding="GroupHealthColor2", 
 			},
 			{
 				id="healthCap", type="HealthCap", parent="barHealth", layer=15,
@@ -67,73 +67,38 @@ function LifeismysteryUnitFrame:Construct(options)
 				media="wtGlaze",
 			},
 			{
-				id="barResource", type="BarWithBorder", parent="frameBackdrop", layer=11,
+				id="barResource", type="BarWithBorder", parent="frameBackdrop", layer=10,
 				attach = {
-					{ point="BOTTOMLEFT", element="frame", targetPoint="BOTTOMLEFT", offsetX=2, offsetY=-20 },
+					{ point="BOTTOMLEFT", element="frame", targetPoint="BOTTOMLEFT", offsetX=2, offsetY=-2 },
 					{ point="TOPRIGHT", element="barHealth", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=0 },
 				},
 				binding="resourcePercent", colorBinding="resourceColor",
-				media="Texture 13", 
+				media="Texture 13",  
 				backgroundColor={r=0.07, g=0.07, b=0.07, a=0.85},
-			},
-			{
-				id="border2", type="BarHealth", parent="frameBackdrop", layer=10, alpha=1,
-				attach = {
-					{ point="BOTTOMLEFT", element="frame", targetPoint="BOTTOMLEFT", offsetX=2, offsetY=-2 },
-					{ point="TOPRIGHT", element="barResource", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=0 },
-				},
-				binding="width",
-				backgroundColor={r=0, g=0, b=0, a=1},				
-				Color={r=0,g=0,b=0, a=1},
 			},
 			{
 				id="barAbsorb", type="BarWithBorder", parent="frameBackdrop", layer=11,
 				attach = {
-					{ point="BOTTOMLEFT", element="barResource", targetPoint="BOTTOMLEFT", offsetX=1, offsetY=-13},
-					{ point="TOPRIGHT", element="barHealth", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=-2 },
+					{ point="BOTTOMLEFT", element="barResource", targetPoint="BOTTOMLEFT", offsetX=1, offsetY=-21},
+					{ point="TOPRIGHT", element="barHealth", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=-24 },
 				},
+				visibilityBinding="absorbPercent",
 				growthDirection="right",
 				binding="absorbPercent", color={r=0.1,g=0.79,b=0.79,a=1.0},
 				backgroundColor={r=0, g=0, b=0, a=0},
 				media="Texture 69", 
 				fullBorder=true,
-				BarWithBorderColor={r=0,g=1,b=1,a=1}, 
+				BarWithBorderColor={r=0,g=1,b=1,a=1},
 			},
-			----------------------------------------------------------
-			{
-				id="barCast", type="BarWithBorder", parent="frameBackdrop", layer=25,
-				attach = {
-					{ point="TOPLEFT", element="border2", targetPoint="TOPLEFT", offsetX=0, offsetY=21},
-					{ point="BOTTOMRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-2, offsetY=20 },
-				},
-				visibilityBinding="castName",
-				binding="castPercent",
-				media="Texture 58",
-				colorBinding="castColor",
-				backgroundColor={r=0.07, g=0.07, b=0.07, a=1}
-			},
-			{
-				id="labelCast", type="Label", parent="frameBackdrop", layer=26,
-				attach = {{ point="CENTERLEFT", element="barCast", targetPoint="CENTERLEFT", offsetX=0, offsetY=0 }},
-				visibilityBinding="castName",
-				text="{castName}", default="", fontSize=13, outline=true,
-			},
-			{
-				id="labelTime", type="Label", parent="frameBackdrop", layer=26,
-				attach = {{ point="CENTERRIGHT", element="barCast", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0 }},
-				visibilityBinding="castName",
-				text="{castTime}", default="", fontSize= 13, outline = true
-			},
-			----------------------------------------------------------------------------------
 			{
 				id="labelhealth", type="Label", parent="frameBackdrop", layer=20,
-				attach = {{ point="CENTERLEFT", element="border2", targetPoint="CENTERLEFT", offsetX=0, offsetY=0 }},
+				attach = {{ point="CENTERLEFT", element="barResource", targetPoint="CENTERLEFT", offsetX=0, offsetY=0 }},
 				visibilityBinding="health",
 				text=" {health} | {healthMax}", default="", fontSize=12, outline=true,
 			},
 			{
 				id="labelresource", type="Label", parent="frameBackdrop", layer=20, alpha=1,
-				attach = {{ point="CENTERRIGHT", element="border2", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0 }},
+				attach = {{ point="CENTERRIGHT", element="barResource", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0 }},
 				visibilityBinding="resource", colorBinding="resourceColor",
 				text=" {resource}", default="", fontSize=12, outline=true,
 			},			
@@ -164,16 +129,10 @@ function LifeismysteryUnitFrame:Construct(options)
 					["oathsworn"] = "FactionOathsworn",
 					["dominion"] = "FactionDominion",
 				},
-			},	
+			},				
 			{
-				id="imgRare", type="Image", parent="frame", layer=50,
-				attach = {{  point="TOPCENTER", element="frame", targetPoint="TOPCENTER", offsetX=0, offsetY=8 }},
-				visibilityBinding="guaranteedLoot",
-				media="RareMob",
-			},			
-			{
-				id="labellevel", type="Label", parent="frame", layer=21,
-				attach = {{ point="CENTERLEFT", element="imgPVP", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0 }},
+				id="labellevel", type="Label", parent="frame", layer=20,
+				attach = {{ point="CENTERLEFT", element="imgPVP", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0  }},
 				visibilityBinding="name",
 				text="{level}", default="", outline=true, fontSize=14,
 				colorBinding="lvlColor",
@@ -199,7 +158,7 @@ function LifeismysteryUnitFrame:Construct(options)
 				visibilityBinding="name",
 				text="{nameShort}", default="", outline=true, fontSize=14,
 				colorBinding="NameColor",
-			},
+			}, 
 			{
 				id="labelStatus", type="Label", parent="frame", layer=20,
 				attach = {{ point="CENTERLEFT", element="labelName", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0 }},
@@ -209,7 +168,7 @@ function LifeismysteryUnitFrame:Construct(options)
 			},
 			{
 			    id="imgMark", type="MediaSet", parent="frameBackdrop", layer=30,
-			    attach = {{ point="TOPCENTER", element="frame", targetPoint="TOPCENTER", offsetX=0, offsetY=10 }},
+			    attach = {{ point="TOPRIGHT", element="frame", targetPoint="TOPRIGHT", offsetX=-3, offsetY=4 }},
 			    width = 25, height = 25,
 			    nameBinding="mark",
 			    names = 
@@ -240,34 +199,31 @@ function LifeismysteryUnitFrame:Construct(options)
 				texAddon=AddonId, texFile="img/wtReady.png", nameBinding="readyStatus", cols=1, rows=2, 
 				names = { ["ready"] = 0, ["notready"] = 1 }, defaultIndex = "hide"
 			},
-			--[[{
-				-- Generic Element Configuration
-				id="buffPanelDebuffs", type="BuffPanel", parent="frameBackdrop", layer=30,
-				attach = {{ point="TOPRIGHT", element="frameBackdrop", targetPoint="TOPRIGHT", offsetX=-1, offsetY=-37 }},
-				--visibilityBinding="id",
-				-- Type Specific Element Configuration
-				rows=1, cols=6, iconSize=30, iconSpacing=1, borderThickness=1,
+			{
+				id="buffPanelDebuffs", type="BuffPanel", semantic="DebuffPanel", parent="frameBackdrop", layer=30,
+				attach = {{ point="BOTTOMRIGHT", element="barResource", targetPoint="BOTTOMRIGHT", offsetX=-1, offsetY=-6 }},
+				rows=1, cols=6, iconSize=16, iconSpacing=1, borderThickness=1,
 				auraType="debuff", 
 				growthDirection = "left_up",
-				timer = true, timerSize = 14, outline=true, 
+				--timer = true, timerSize = 14, outline=true, 
 				color={r=1,g=1,b=0,a=1},
 				stack = true, stackSize = 15, outline=true,
 			},
 			{
-				id="buffPanelHoTs", type="BuffPanel", parent="frameBackdrop", layer=30, --semantic="HoTPanel"
-				attach = {{ point="BOTTOMLEFT", element="frameBackdrop", targetPoint="BOTTOMLEFT", offsetX=1, offsetY=25 }},
-				rows=4, cols=7, iconSize=0, iconSpacing=0, borderThickness=1,
-				auraType="buff",selfCast=false, 
+				id="buffPanelHoTs", type="BuffPanel", semantic="HoTPanel", parent="frameBackdrop", layer=30,
+				attach = {{ point="TOPRIGHT", element="frameBackdrop", targetPoint="TOPRIGHT", offsetX=-1, offsetY=1 }},
+				rows=1, cols=6, iconSize=16, iconSpacing=0, borderThickness=1,
+				auraType="hot",selfCast=true, 
 				timer = true, timerSize = 11, outline=true, color={r=1,g=1,b=0,a=1}, 
 				stack = true, stackSize = 12, outline=true,
-				growthDirection = "right_down",
-			},]]
+				growthDirection = "left_up",
+			},
 			{
-			id="imgInCombat", type="Image", parent="frame", layer=55,
-			attach = {{ point="CENTER", element="frameBackdrop", targetPoint="TOPLEFT", offsetX=0, offsetY=20 }}, visibilityBinding="combat",
-			texAddon=AddonId, 
-			texFile="img/InCombat32.png",
-			width=15, height=15,
+				id="imgInCombat", type="Image", parent="frame", layer=55,
+				attach = {{ point="CENTER", element="frameBackdrop", targetPoint="TOPLEFT", offsetX=0, offsetY=20 }}, visibilityBinding="combat",
+				texAddon=AddonId, 
+				texFile="img/InCombat32.png",
+				width=15, height=15,
 			},
 			
 		}
@@ -288,8 +244,8 @@ function LifeismysteryUnitFrame:Construct(options)
 		function(el)
 			local newWidth = self:GetWidth()
 			local newHeight = self:GetHeight()
-			local fracWidth = newWidth / LifeismysteryUnitFrame.Configuration.Width
-			local fracHeight = newHeight / LifeismysteryUnitFrame.Configuration.Height
+			local fracWidth = newWidth / LifeismysteryGroupFrame2.Configuration.Width
+			local fracHeight = newHeight / LifeismysteryGroupFrame2.Configuration.Height
 			local fracMin = math.min(fracWidth, fracHeight)
 			local fracMax = math.max(fracWidth, fracHeight)
 			local labName = self.Elements.labelName
@@ -315,22 +271,15 @@ function LifeismysteryUnitFrame:Construct(options)
 	
  end  
 
-WT.Unit.CreateVirtualProperty("UnitHealthColor2", { "id"},
+
+
+WT.Unit.CreateVirtualProperty("GroupHealthColor2", { "id", "offline"},
 	function(unit)
-		if unit.id then
+		if unit.offline then
+			return {r=0.07,g=0.07,b=0.09, a=0.85}
+		elseif unit.id then
 			return { r=0.5, g=0, b=0, a=0.8 }
-		else
+		else	
 			return {r=0,g=0,b=0, a=0}
-		end
-	end)	
-	
-WT.Unit.CreateVirtualProperty("BorderColorUnit", { "id", "aggro" },
-	function(unit)
-		if not unit.id then
-			return { r = 0, g=0, b = 0, a=0 }
-		elseif unit.aggro  then
-			return { r=1, g=0, b =0, a=1 }
-		elseif not unit.aggro and unit.id then
-			return { r = 0, g=0, b = 0, a=1 }
 		end
 	end)

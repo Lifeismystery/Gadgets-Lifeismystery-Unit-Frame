@@ -13,9 +13,12 @@ RunOnStartup =
 {
   "templates/LifeismysteryRaidFrame.lua",
   "templates/LifeismysteryUnitFrame.lua",
+  "templates/LifeismysteryUnitFrame2.lua",
   "templates/LifeismysteryTargetOfTarget.lua",
   "templates/LifeismysteryGroupFrame.lua",
+  "templates/LifeismysteryGroupFrame2.lua",  
   "templates/LifeismysteryDispel.lua",
+  "templates/LifeismysteryMageFrame.lua",
 }
 
 SavedVariables = 
@@ -33,6 +36,10 @@ Dependencies =
 	Gadgets = {"required", "before"},
 }
 -- X-Curse-Packaged-Version: 1.5
+-- X-Curse-Project-Name: Gadgets: Lifeismystery Unit Frame
+-- X-Curse-Project-ID: gadgets-lifeismystery-unit-frame
+-- X-Curse-Repository-ID: rift/gadgets-lifeismystery-unit-frame/mainline
+-- X-Curse-Packaged-Version: 1.6
 -- X-Curse-Project-Name: Gadgets: Lifeismystery Unit Frame
 -- X-Curse-Project-ID: gadgets-lifeismystery-unit-frame
 -- X-Curse-Repository-ID: rift/gadgets-lifeismystery-unit-frame/mainline

@@ -35,8 +35,8 @@ function LifeismysteryDispel:Construct(options)
 					{ point="BOTTOMRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-2, offsetY=-2 },
 				},
 				binding="width",
-				backgroundColorUnit={r=0.07, g=0.07, b=0.07, a=0.9},
-                backgroundColorBinding="backgroundColorUnit",						
+				backgroundColorRaid={r=0.07, g=0.07, b=0.07, a=0.9},
+                backgroundColorBinding="backgroundColorRaid",						
 			},			
 			{
 				id="border", type="BarHealth", parent="frameBackdrop", layer=10, alpha=1,

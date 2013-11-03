@@ -71,8 +71,8 @@ function LifeismysteryTargetOfTarget:Construct(options)
 				id="labelName", type="Label", parent="frame", layer=20,
 				attach = {{ point="CENTER", element="border", targetPoint="CENTER", offsetX=0, offsetY=0 }},
 				visibilityBinding="name",
-				text="{name}", default="", outline=true, fontSize=12,
-				colorBinding="callingColor",
+				text="{nameShort}", default="", outline=true, fontSize=12,
+				colorBinding="NameColor",
 			},	
 		}
 	}
@@ -80,9 +80,8 @@ function LifeismysteryTargetOfTarget:Construct(options)
 	for idx,element in ipairs(template.elements) do
 		if not options.showAbsorb and element.id == "barAbsorb" then 
 			-- showElement = false
-		elseif element.semantic == "HoTTracker" and not options.showHoTTrackers 
-		then
-			showElement = false	
+		elseif element.semantic == "HoTTracker" and not options.showHoTTrackers  then
+			-- showElement = false
 		elseif element.semantic == "HoTPanel" and not options.showHoTPanel then
 			-- showElement = false	
 		else 

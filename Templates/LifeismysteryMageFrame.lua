@@ -2,17 +2,17 @@ local toc, data = ...
 local AddonId = toc.identifier
 
 -- Frame Configuration Options --------------------------------------------------
-local LifeismysteryUnitFrame = WT.UnitFrame:Template("LifeismysteryUnitFrame")
-LifeismysteryUnitFrame.Configuration.Name = "Lifeismystery Unit Frame ()"
-LifeismysteryUnitFrame.Configuration.RaidSuitable = false
-LifeismysteryUnitFrame.Configuration.UnitSuitable = true
-LifeismysteryUnitFrame.Configuration.FrameType = "Frame"
-LifeismysteryUnitFrame.Configuration.Width = 250
-LifeismysteryUnitFrame.Configuration.Height = 40
-LifeismysteryUnitFrame.Configuration.Resizable = { 10, 10, 500, 100 }
+local LifeismysteryMageFrame = WT.UnitFrame:Template("LifeismysteryMageFrame")
+LifeismysteryMageFrame.Configuration.Name = "Lifeismystery Mage Frame whith Charge"
+LifeismysteryMageFrame.Configuration.RaidSuitable = false
+LifeismysteryMageFrame.Configuration.UnitSuitable = true
+LifeismysteryMageFrame.Configuration.FrameType = "Frame"
+LifeismysteryMageFrame.Configuration.Width = 250
+LifeismysteryMageFrame.Configuration.Height = 40
+LifeismysteryMageFrame.Configuration.Resizable = { 10, 10, 500, 100 }
 
 --------------------------------------------------------------
-function LifeismysteryUnitFrame:Construct(options)
+function LifeismysteryMageFrame:Construct(options)
 	local template =
 	{
 		elements = 
@@ -37,22 +37,22 @@ function LifeismysteryUnitFrame:Construct(options)
 				binding="width",
 				backgroundColor={r=0, g=0, b=0, a=0},				
 				Color={r=0,g=0,b=0, a=0},
-				border=true, BorderColorBinding="BorderColorUnit", BorderColorUnit = {r=0,g=0,b=0,a=1},
+				border=true, BorderColorBinding="BorderColorMage", BorderColorMage = {r=0,g=0,b=0,a=1},
 				borderTextureAggro=true, BorderTextureAggroVisibleBinding="BorderTextureAggroVisible", BorderTextureAggroVisible=true,
 			},	
 			{
 				id="barHealth", type="BarHealth", parent="frameBackdrop", layer=10,
 				attach = {
 					{ point="TOPLEFT", element="frame", targetPoint="TOPLEFT", offsetX=2, offsetY=2 },
-					{ point="BOTTOMRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-2, offsetY=-26 },
+					{ point="BOTTOMRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-2, offsetY=-20 },
 				},
 				growthDirection="left",
 				binding="healthPercent",
 				media="shadow", 
 				backgroundColorUnit={r=0.07, g=0.07, b=0.07, a=0.85},
                 backgroundColorBinding="backgroundColorUnit",							
-				UnitHealthColor2={r=0.5,g=0,b=0, a=0.8},
-				colorBinding="UnitHealthColor2", 
+				UnitHealthMage={r=0.5,g=0,b=0, a=0.8},
+				colorBinding="UnitHealthMage", 
 			},
 			{
 				id="healthCap", type="HealthCap", parent="barHealth", layer=15,
@@ -69,7 +69,7 @@ function LifeismysteryUnitFrame:Construct(options)
 			{
 				id="barResource", type="BarWithBorder", parent="frameBackdrop", layer=11,
 				attach = {
-					{ point="BOTTOMLEFT", element="frame", targetPoint="BOTTOMLEFT", offsetX=2, offsetY=-20 },
+					{ point="BOTTOMLEFT", element="frame", targetPoint="BOTTOMLEFT", offsetX=2, offsetY=-2 },
 					{ point="TOPRIGHT", element="barHealth", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=0 },
 				},
 				binding="resourcePercent", colorBinding="resourceColor",
@@ -77,34 +77,41 @@ function LifeismysteryUnitFrame:Construct(options)
 				backgroundColor={r=0.07, g=0.07, b=0.07, a=0.85},
 			},
 			{
-				id="border2", type="BarHealth", parent="frameBackdrop", layer=10, alpha=1,
+				id="barAbsorb", type="BarWithBorder", parent="frameBackdrop", layer=12,
 				attach = {
-					{ point="BOTTOMLEFT", element="frame", targetPoint="BOTTOMLEFT", offsetX=2, offsetY=-2 },
-					{ point="TOPRIGHT", element="barResource", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=0 },
-				},
-				binding="width",
-				backgroundColor={r=0, g=0, b=0, a=1},				
-				Color={r=0,g=0,b=0, a=1},
-			},
-			{
-				id="barAbsorb", type="BarWithBorder", parent="frameBackdrop", layer=11,
-				attach = {
-					{ point="BOTTOMLEFT", element="barResource", targetPoint="BOTTOMLEFT", offsetX=1, offsetY=-13},
-					{ point="TOPRIGHT", element="barHealth", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=-2 },
+					{ point="BOTTOMLEFT", element="barResource", targetPoint="BOTTOMLEFT", offsetX=1, offsetY=-21},
+					{ point="TOPRIGHT", element="barResource", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=-24 },
 				},
 				growthDirection="right",
+				visibilityBinding="absorbPercent",
 				binding="absorbPercent", color={r=0.1,g=0.79,b=0.79,a=1.0},
 				backgroundColor={r=0, g=0, b=0, a=0},
 				media="Texture 69", 
 				fullBorder=true,
 				BarWithBorderColor={r=0,g=1,b=1,a=1}, 
 			},
-			----------------------------------------------------------
+			{
+				id="barCharge", type="BarWithBorder", parent="frameBackdrop", layer=11,
+				attach = {
+					{ point="BOTTOMLEFT", element="frame", targetPoint="BOTTOMLEFT", offsetX=2, offsetY=21 },
+					{ point="TOPRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-2, offsetY=0 },
+				},
+				visibilityBinding="charge",
+				binding="chargePercent", color={r=0,g=0.8,b=0.8,a=0.8},
+				media="Texture 90",
+				backgroundColor={r=0.07, g=0.07, b=0.07, a=0.85}
+			},
+			{
+				id="chargeLabel", type="Label", parent="frame", layer=20,
+				attach = {{ point="CENTER", element="barCharge", targetPoint="CENTER", offsetX=0, offsetY=0 }},
+				text="{chargePercent}", fontSize=12, outline=true,
+			},
+			----------------------------------------------------------------------------------
 			{
 				id="barCast", type="BarWithBorder", parent="frameBackdrop", layer=25,
 				attach = {
-					{ point="TOPLEFT", element="border2", targetPoint="TOPLEFT", offsetX=0, offsetY=21},
-					{ point="BOTTOMRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-2, offsetY=20 },
+					{ point="BOTTOMLEFT", element="barCharge", targetPoint="BOTTOMLEFT", offsetX=0, offsetY=22 },
+					{ point="TOPRIGHT", element="barCharge", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=0 },
 				},
 				visibilityBinding="castName",
 				binding="castPercent",
@@ -127,13 +134,13 @@ function LifeismysteryUnitFrame:Construct(options)
 			----------------------------------------------------------------------------------
 			{
 				id="labelhealth", type="Label", parent="frameBackdrop", layer=20,
-				attach = {{ point="CENTERLEFT", element="border2", targetPoint="CENTERLEFT", offsetX=0, offsetY=0 }},
+				attach = {{ point="CENTERLEFT", element="barResource", targetPoint="CENTERLEFT", offsetX=0, offsetY=0 }},
 				visibilityBinding="health",
 				text=" {health} | {healthMax}", default="", fontSize=12, outline=true,
 			},
 			{
 				id="labelresource", type="Label", parent="frameBackdrop", layer=20, alpha=1,
-				attach = {{ point="CENTERRIGHT", element="border2", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0 }},
+				attach = {{ point="CENTERRIGHT", element="barResource", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0 }},
 				visibilityBinding="resource", colorBinding="resourceColor",
 				text=" {resource}", default="", fontSize=12, outline=true,
 			},			
@@ -142,7 +149,7 @@ function LifeismysteryUnitFrame:Construct(options)
 				attach = {{ point="CENTERRIGHT", element="labelresource", targetPoint="CENTERLEFT", offsetX=5, offsetY=0   }},
 				visibilityBinding="health",
 				text="{healthPercent}%", default="", fontSize=12, outline=true,
-			},	
+			},
 			{
 				id="imgRole", type="MediaSet", parent="frameBackdrop", layer=20,
 				attach = {{ point="BOTTOMLEFT", element="frame", targetPoint="TOPLEFT", offsetX=5, offsetY=7 }}, 
@@ -201,11 +208,10 @@ function LifeismysteryUnitFrame:Construct(options)
 				colorBinding="NameColor",
 			},
 			{
-				id="labelStatus", type="Label", parent="frame", layer=20,
-				attach = {{ point="CENTERLEFT", element="labelName", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0 }},
+				id="labelStatus", type="Label", parent="frameBackdrop", layer=20,
+				attach = {{ point="BOTTOMCENTER", element="frame", targetPoint="BOTTOMCENTER", offsetX=0, offsetY=-4 }},
 				visibilityBinding="UnitStatus",
-				color={r = 0.38, g = 0.81, b = 1.0, a = 1.0},
-				text="{UnitStatus}", default="", fontSize=14, outline = true,
+				text=" {UnitStatus}", default="", fontSize=11, outline = true,
 			},
 			{
 			    id="imgMark", type="MediaSet", parent="frameBackdrop", layer=30,
@@ -288,8 +294,8 @@ function LifeismysteryUnitFrame:Construct(options)
 		function(el)
 			local newWidth = self:GetWidth()
 			local newHeight = self:GetHeight()
-			local fracWidth = newWidth / LifeismysteryUnitFrame.Configuration.Width
-			local fracHeight = newHeight / LifeismysteryUnitFrame.Configuration.Height
+			local fracWidth = newWidth / LifeismysteryMageFrame.Configuration.Width
+			local fracHeight = newHeight / LifeismysteryMageFrame.Configuration.Height
 			local fracMin = math.min(fracWidth, fracHeight)
 			local fracMax = math.max(fracWidth, fracHeight)
 			local labName = self.Elements.labelName
@@ -315,7 +321,7 @@ function LifeismysteryUnitFrame:Construct(options)
 	
  end  
 
-WT.Unit.CreateVirtualProperty("UnitHealthColor2", { "id"},
+WT.Unit.CreateVirtualProperty("UnitHealthMage", { "id"},
 	function(unit)
 		if unit.id then
 			return { r=0.5, g=0, b=0, a=0.8 }
@@ -324,7 +330,7 @@ WT.Unit.CreateVirtualProperty("UnitHealthColor2", { "id"},
 		end
 	end)	
 	
-WT.Unit.CreateVirtualProperty("BorderColorUnit", { "id", "aggro" },
+WT.Unit.CreateVirtualProperty("BorderColorMage", { "id", "aggro" },
 	function(unit)
 		if not unit.id then
 			return { r = 0, g=0, b = 0, a=0 }

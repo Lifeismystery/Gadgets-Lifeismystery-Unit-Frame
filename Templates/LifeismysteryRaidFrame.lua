@@ -19,8 +19,7 @@ function LifeismysteryRaidFrame:Construct(options)
 		elements = 
 		{
 			{
-				-- Generic Element Configuration
-				id="frameBackdrop", type="Frame", parent="frame", layer=0, --alpha=1,
+				id="frameBackdrop", type="Frame", parent="frame", layer=0,
 				attach = 
 				{ 
 					{ point="TOPLEFT", element="frame", targetPoint="TOPLEFT", offsetX=1, offsetY=-1, },
@@ -32,7 +31,6 @@ function LifeismysteryRaidFrame:Construct(options)
 				FrameAlphaBinding="FrameAlpha",
 			}, 
 			{
-				-- Generic Element Configuration
 				id="barHealth", type="BarHealth", parent="frameBackdrop", layer=10,
 				attach = {
 					{ point="TOPLEFT", element="frame", targetPoint="TOPLEFT", offsetX=2, offsetY=2 },
@@ -40,8 +38,8 @@ function LifeismysteryRaidFrame:Construct(options)
 				},
 				growthDirection="left",
 				binding="healthPercent",
-				backgroundColorUnit={r=0.07, g=0.07, b=0.07, a=0.9},
-                backgroundColorBinding="backgroundColorUnit",				
+				backgroundColorRaid={r=0.07, g=0.07, b=0.07, a=0.85},
+                backgroundColorBinding="backgroundColorRaid",				
 				raidHealthColor2={r=0.5,g=0,b=0, a=0.8},
 				colorBinding="raidHealthColor2",				
 			},
@@ -58,7 +56,6 @@ function LifeismysteryRaidFrame:Construct(options)
 				media="wtGlaze",
 			},			
 			{
-				-- Generic Element Configuration
 				id="border", type="BarHealth", parent="frameBackdrop", layer=10, alpha=1,
 				attach = {
 					{ point="TOPLEFT", element="frame", targetPoint="TOPLEFT", offsetX=2, offsetY=2 },
@@ -71,55 +68,46 @@ function LifeismysteryRaidFrame:Construct(options)
 				borderTextureTarget=true, BorderTextureTargetVisibleBinding="BorderTextureTargetVisible", BorderTextureTargetVisible=true,
 				borderTextureAggro=true, BorderTextureAggroVisibleBinding="BorderTextureAggroVisible", BorderTextureAggroVisible=true,
 			},			
-		--[[	{
-				-- Generic Element Configuration
-				id="barResource", type="Bar", parent="frameBackdrop", layer=11,
-				attach = {
-					{ point="BOTTOMLEFT", element="frame", targetPoint="BOTTOMLEFT", offsetX=2, offsetY=-2 },
-					{ point="TOPRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-2, offsetY=-4 },
-				},
-				-- visibilityBinding="id",
-				-- Type Specific Element Configuration
-				binding="resourcePercent", height=raidFrameBottomBarHeight, --colorBinding="resourceColor",
-			--	media="wtGlaze", 
-				backgroundColor={r=0, g=0, b=0, a=0}
-			},]]
 			{
-				id="barAbsorb", type="Bar", parent="frameBackdrop", layer=12,
+				id="barAbsorb", type="BarWithBorder", parent="frameBackdrop", layer=12,
 				attach = {
 					{ point="BOTTOMLEFT", element="frame", targetPoint="BOTTOMLEFT", offsetX=2, offsetY=-3 },
-					{ point="TOPRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-2, offsetY=-7 },
+					{ point="TOPRIGHT", element="frame", targetPoint="BOTTOMRIGHT", offsetX=-2, offsetY=-6 },
 				},
 				media="wtGlaze", 
 				growthDirection="right",
-				binding="absorbPercent", color={r=0,g=1,b=1,a=0.7},
+				binding="absorbPercent", color={r=0.1,g=0.79,b=0.79,a=1.0},
 				backgroundColor={r=0, g=0, b=0, a=0},
+				media="Texture 69", 
+				fullBorder=true,
+				BarWithBorderColor={r=0,g=1,b=1,a=1}, 
 			},
 			{
 				id="imgRole", type="MediaSet", parent="frameBackdrop", layer=20,
-				attach = {{ point="CENTER", element="frame", targetPoint="TOPLEFT", offsetX=4, offsetY=4 }}, 
+				attach = {{  point="TOPLEFT", element="frame", targetPoint="TOPLEFT", offsetX=2, offsetY=-2 }}, 
 				visibilityBinding="role",
 				nameBinding="role", 
-				names = { ["tank"] = "octanusTank", ["heal"] = "octanusHeal", ["dps"] = "octanusDPS", ["support"] = "octanusSupport" },
+				names = { ["tank"] = "iconRoleTank", ["heal"] = "iconRoleHeal", ["dps"] = "iconRoleDPS", ["support"] = "iconRoleSupport" },
+				width = 13, height = 13,
+				defaultIndex = "hide",
 			},		
 			{
-				-- Generic Element Configuration
-				id="labelName", type="Label", parent="frameBackdrop", layer=20,
+				id="labelName", type="Label", parent="frame", layer=20,
 				attach = {{ point="CENTER", element="frame", targetPoint="CENTER", offsetX=0, offsetY=3 }},
 				visibilityBinding="name",
 				text="{nameShort}", maxLength=10, default="", outline=true,
-				colorBinding="callingColor",
+				colorBinding="NameColor",
 			},
 			{
-				-- Generic Element Configuration
-				id="labelStatus", type="Label", parent="frameBackdrop", layer=20,
-				attach = {{ point="BOTTOMCENTER", element="frame", targetPoint="BOTTOMCENTER", offsetX=0, offsetY=-4 }},
+				id="labelStatus", type="Label", parent="frame", layer=20,
+				attach = {{ point="BOTTOMCENTER", element="frame", targetPoint="BOTTOMCENTER", offsetX=0, offsetY=-1 }},
 				visibilityBinding="UnitStatus",
-				text=" {UnitStatus}", default="", fontSize=11, outline = true,
+				color={r = 0.35, g = 0.35, b = 0.35, a = 1.0},
+				text=" {UnitStatus}", default="", fontSize=12, outline = true,
 			},
 			{
 			    id="imgMark", type="MediaSet", parent="frameBackdrop", layer=30,
-			    attach = {{ point="CENTER", element="frame", targetPoint="CENTER", offsetX=-0, offsetY=-10 }},
+			    attach = {{ point="CENTERLEFT", element="labelName", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0 }},
 			    width = 12, height = 12,
 			    nameBinding="mark",
 			    names = 
@@ -145,15 +133,12 @@ function LifeismysteryRaidFrame:Construct(options)
 			    visibilityBinding="mark",alpha=1.0,
 			},
 			{
-				-- Generic Element Configuration
-				id="imgReady", type="ImageSet", parent="frameBackdrop", layer=30,
-				attach = {{ point="CENTER", element="frame", targetPoint="CENTER" }}, -- visibilityBinding="id",
-				-- Type Specific Element Configuration
+				id="imgReady", type="ImageSet", parent="frame", layer=30,
+				attach = {{ point="CENTER", element="frame", targetPoint="CENTER" }},
 				texAddon=AddonId, texFile="img/wtReady.png", nameBinding="readyStatus", cols=1, rows=2, 
 				names = { ["ready"] = 0, ["notready"] = 1 }, defaultIndex = "hide"
 			},
 			{
-				-- Generic Element Configuration
 				id="buffPanelDebuffs", type="BuffPanel", semantic="DebuffPanel", parent="frameBackdrop", layer=30,
 				attach = {{ point="BOTTOMRIGHT", element="frameBackdrop", targetPoint="BOTTOMRIGHT", offsetX=-1, offsetY=-3 }},
 				rows=1, cols=6, iconSize=16, iconSpacing=1, borderThickness=1,
@@ -179,9 +164,8 @@ function LifeismysteryRaidFrame:Construct(options)
 	for idx,element in ipairs(template.elements) do
 		if not options.showAbsorb and element.id == "barAbsorb" then 
 			-- showElement = false
-		elseif element.semantic == "HoTTracker" and not options.showHoTTrackers 
-		then
-			showElement = false	
+		elseif element.semantic == "HoTTracker" and not options.showHoTTrackers  then
+			-- showElement = false	
 		elseif element.semantic == "HoTPanel" and not options.showHoTPanel then
 			-- showElement = false	
 		elseif element.semantic == "DebuffPanel" and not options.showDebuffPanel then
@@ -221,9 +205,11 @@ function LifeismysteryRaidFrame:Construct(options)
  end  
 	
 	
-WT.Unit.CreateVirtualProperty("raidHealthColor2", { "id"},
+WT.Unit.CreateVirtualProperty("raidHealthColor2", { "id", "offline"},
 	function(unit)
-		if unit.id then
+		if unit.offline then
+			return {r=0.07,g=0.07,b=0.09, a=0.85}
+		elseif unit.id then
 			return { r=0.5, g=0, b=0, a=0.8 }
 		else	
 			return {r=0,g=0,b=0, a=0}

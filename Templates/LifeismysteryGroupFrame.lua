@@ -1,7 +1,6 @@
 local toc, data = ...
 local AddonId = toc.identifier
 
-local LifeismysteryGroupFrameMargin = 2
 -- Frame Configuration Options --------------------------------------------------
 local LifeismysteryGroupFrame = WT.UnitFrame:Template("LifeismysteryGroupFrame")
 LifeismysteryGroupFrame.Configuration.Name = "Lifeismystery Group Frame"
@@ -18,7 +17,6 @@ function LifeismysteryGroupFrame:Construct(options)
 		elements = 
 		{
 			{
-				-- Generic Element Configuration
 				id="frameBackdrop", type="Frame", parent="frame", layer=1, alpha=1,
 				attach = 
 				{ 
@@ -30,7 +28,6 @@ function LifeismysteryGroupFrame:Construct(options)
 				FrameAlphaBinding="FrameAlpha",				
 			}, 
 			{
-				-- Generic Element Configuration
 				id="border", type="BarHealth", parent="frameBackdrop", layer=10, alpha=1,
 				attach = {
 					{ point="TOPLEFT", element="frame", targetPoint="TOPLEFT", offsetX=2, offsetY=2 },
@@ -44,7 +41,6 @@ function LifeismysteryGroupFrame:Construct(options)
 				borderTextureAggro=true, BorderTextureAggroVisibleBinding="BorderTextureAggroVisible", BorderTextureAggroVisible=true,
 			},	
 			{
-				-- Generic Element Configuration
 				id="barHealth", type="BarHealth", parent="frameBackdrop", layer=10,
 				attach = {
 					{ point="TOPLEFT", element="frame", targetPoint="TOPLEFT", offsetX=2, offsetY=2 },
@@ -52,8 +48,8 @@ function LifeismysteryGroupFrame:Construct(options)
 				},
 				growthDirection="left",
 				binding="healthPercent",
-			--	media="wtGlaze", 
-				backgroundColorUnit={r=0.07, g=0.07, b=0.07, a=0.9},
+				media="shadow", 
+				backgroundColorUnit={r=0.07, g=0.07, b=0.07, a=0.85},
                 backgroundColorBinding="backgroundColorUnit",							
 				GroupHealthColor={r=0.5,g=0,b=0, a=0.8},
 				colorBinding="GroupHealthColor", 
@@ -71,20 +67,16 @@ function LifeismysteryGroupFrame:Construct(options)
 				media="wtGlaze",
 			},
 			{
-				-- Generic Element Configuration
-				id="barResource", type="Bar", parent="frameBackdrop", layer=11, alpha=1,
+				id="barResource", type="BarWithBorder", parent="frameBackdrop", layer=10,
 				attach = {
 					{ point="BOTTOMLEFT", element="frame", targetPoint="BOTTOMLEFT", offsetX=2, offsetY=-20 },
 					{ point="TOPRIGHT", element="barHealth", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=0 },
 				},
-				-- visibilityBinding="id",
-				-- Type Specific Element Configuration
 				binding="resourcePercent", colorBinding="resourceColor",
-				media="wtGlaze", 
+				media="Texture 13",  
 				backgroundColor={r=0.07, g=0.07, b=0.07, a=0.85},
 			},
 			{
-				-- Generic Element Configuration
 				id="border2", type="BarHealth", parent="frameBackdrop", layer=10, alpha=1,
 				attach = {
 					{ point="BOTTOMLEFT", element="frame", targetPoint="BOTTOMLEFT", offsetX=2, offsetY=-2 },
@@ -95,95 +87,129 @@ function LifeismysteryGroupFrame:Construct(options)
 				Color={r=0,g=0,b=0, a=1},
 			},
 			{
-				id="barAbsorb", type="Bar", parent="frameBackdrop", layer=11,
+				id="barAbsorb", type="BarWithBorder", parent="frameBackdrop", layer=11,
 				attach = {
-					{ point="BOTTOMLEFT", element="barResource", targetPoint="BOTTOMLEFT", offsetX=0, offsetY=-13},
-					{ point="TOPRIGHT", element="barHealth", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=-1 },
+					{ point="BOTTOMLEFT", element="barResource", targetPoint="BOTTOMLEFT", offsetX=1, offsetY=-13},
+					{ point="TOPRIGHT", element="barHealth", targetPoint="BOTTOMRIGHT", offsetX=0, offsetY=-2 },
 				},
+				visibilityBinding="id",
 				growthDirection="right",
-				binding="absorbPercent", color={r=0,g=1,b=1,a=0.7},
+				binding="absorbPercent", color={r=0.1,g=0.79,b=0.79,a=1.0},
 				backgroundColor={r=0, g=0, b=0, a=0},
-				media="wtGlaze", 
+				media="Texture 69", 
+				fullBorder=true,
+				BarWithBorderColor={r=0,g=1,b=1,a=1},
 			},
 			{
-				id="labelhealth", type="Label", parent="frame", layer=20,
-				attach = {{ point="BOTTOMLEFT", element="border2", targetPoint="BOTTOMLEFT", offsetX=-3, offsetY=2  }},
+				id="labelhealth", type="Label", parent="frameBackdrop", layer=20,
+				attach = {{ point="CENTERLEFT", element="border2", targetPoint="CENTERLEFT", offsetX=0, offsetY=0 }},
 				visibilityBinding="health",
-				text=" {health} | {healthPercent}%", default="", fontSize=12, outline=true,
-			},						
-			{
-				id="labelresource", type="Label", parent="frame", layer=20, alpha=0.8,
-				attach = {{ point="BOTTOMRIGHT", element="border2", targetPoint="BOTTOMRIGHT", offsetX=-3, offsetY=2 }},
-				visibilityBinding="resource",
-				text=" {resource}", default="", fontSize=12, outline=true,
+				text=" {health} | {healthMax}", default="", fontSize=12, outline=true,
 			},
 			{
-				id="imgRole", type="MediaSet", parent="frameBackdrop", layer=20,
-				attach = {{ point="CENTER", element="frame", targetPoint="TOPLEFT", offsetX=2, offsetY=2 }}, 
-				visibilityBinding="role",
-				nameBinding="role", 
-				names = { ["tank"] = "octanusTank", ["heal"] = "octanusHeal", ["dps"] = "octanusDPS", ["support"] = "octanusSupport" },
-			},		
-			{
-				-- Generic Element Configuration
-				id="labellvl", type="Label", parent="frame", layer=20,
-				attach = {{ point="TOPLEFT", element="border", targetPoint="TOPLEFT", offsetX=4, offsetY=-14 }},
-				visibilityBinding="name",
-				text="{level}", default="", outline=true, fontSize=14,
-				colorBinding="callingColor",
+				id="labelresource", type="Label", parent="frameBackdrop", layer=20, alpha=1,
+				attach = {{ point="CENTERRIGHT", element="border2", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0 }},
+				visibilityBinding="resource", colorBinding="resourceColor",
+				text=" {resource}", default="", fontSize=12, outline=true,
 			},			
 			{
-				-- Generic Element Configuration
-				id="labelName", type="Label", parent="frame", layer=20,
-				attach = {{ point="TOPLEFT", element="border", targetPoint="TOPLEFT", offsetX=23, offsetY=-14 }},
+				id="labelhealthPercent", type="Label", parent="frameBackdrop", layer=20,
+				attach = {{ point="CENTERRIGHT", element="labelresource", targetPoint="CENTERLEFT", offsetX=5, offsetY=0   }},
+				visibilityBinding="health",
+				text="{healthPercent}%", default="", fontSize=12, outline=true,
+			},	
+			{
+				id="imgRole", type="MediaSet", parent="frameBackdrop", layer=20,
+				attach = {{ point="BOTTOMLEFT", element="frame", targetPoint="TOPLEFT", offsetX=5, offsetY=7 }}, 
+				visibilityBinding="role",
+				nameBinding="role", 
+				names = { ["tank"] = "iconRoleTank", ["heal"] = "iconRoleHeal", ["dps"] = "iconRoleDPS", ["support"] = "iconRoleSupport" },
+				width = 12, height = 12,
+				defaultIndex = "hide",
+			},
+			{
+				id="imgPVP", type="MediaSet", parent="frame", layer=20, width=16, height=16,
+				attach = {{ point="CENTERLEFT", element="imgRole", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0 }}, 
+				nameBinding="pvpAlliance",
+				names = 
+				{
+					["defiant"] = "FactionDefiant",
+					["guardian"] = "FactionGuardian",
+					["nightfall"] = "FactionNightfall",
+					["oathsworn"] = "FactionOathsworn",
+					["dominion"] = "FactionDominion",
+				},
+			},				
+			{
+				id="labellevel", type="Label", parent="frame", layer=20,
+				attach = {{ point="CENTERLEFT", element="imgPVP", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0  }},
 				visibilityBinding="name",
-				text="{name}", default="", outline=true, fontSize=14,
-				colorBinding="callingColor",
+				text="{level}", default="", outline=true, fontSize=14,
+				colorBinding="lvlColor",
+			},
+			{
+				id="imgMentor", type="Image", parent="frame", layer=50, width=60, height=30,
+				attach = {{  point="CENTER", element="labellevel", targetPoint="CENTER", offsetX=0, offsetY=-12 }},
+				visibilityBinding="mentoring",
+				media="Mentoring",
+			},
+			{
+				id="imgBossLvl", type="MediaSet", parent="frame", layer=50, width=18, height=28,
+				attach = {{  point="CENTER", element="labellevel", targetPoint="CENTER", offsetX=0, offsetY=-5 }},
+				nameBinding="level",
+				names = { 
+						["??"] = "icon_boss", 
+						}, 
+				defaultIndex = "hide",
+			},
+			{
+				id="labelName", type="Label", parent="frame", layer=20,
+				attach = {{ point="CENTERLEFT", element="labellevel", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0 }},
+				visibilityBinding="name",
+				text="{nameShort}", default="", outline=true, fontSize=14,
+				colorBinding="NameColor",
 			}, 
 			{
-				-- Generic Element Configuration
-				id="labelStatus", type="Label", parent="frameBackdrop", layer=20,
-				attach = {{ point="BOTTOMCENTER", element="frame", targetPoint="BOTTOMCENTER", offsetX=0, offsetY=-4 }},
+				id="labelStatus", type="Label", parent="frame", layer=20,
+				attach = {{ point="CENTERLEFT", element="labelName", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0 }},
 				visibilityBinding="UnitStatus",
-				text=" {UnitStatus}", default="", fontSize=11, outline = true,
+				color={r = 0.38, g = 0.81, b = 1.0, a = 1.0},
+				text="{UnitStatus}", default="", fontSize=14, outline = true,
 			},
 			{
 			    id="imgMark", type="MediaSet", parent="frameBackdrop", layer=30,
 			    attach = {{ point="TOPRIGHT", element="frame", targetPoint="TOPRIGHT", offsetX=-3, offsetY=4 }},
-			    width = 12, height = 12,
+			    width = 25, height = 25,
 			    nameBinding="mark",
 			    names = 
 			    {
-			        ["1"] = "riftMark01_mini",
-			        ["2"] = "riftMark02_mini",
-			        ["3"] = "riftMark03_mini",
-			        ["4"] = "riftMark04_mini",
-			        ["5"] = "riftMark05_mini",
-			        ["6"] = "riftMark06_mini",
-			        ["7"] = "riftMark07_mini",
-			        ["8"] = "riftMark08_mini",
-			        ["9"] = "riftMark09_mini",
-			        ["10"] = "riftMark10_mini",
-			        ["11"] = "riftMark11_mini",
-			        ["12"] = "riftMark12_mini",
-			        ["13"] = "riftMark13_mini",
-			        ["14"] = "riftMark14_mini",
-			        ["15"] = "riftMark15_mini",
-			        ["16"] = "riftMark16_mini",
-			        ["17"] = "riftMark17_mini",
+			        ["1"] = "riftMark01",
+			        ["2"] = "riftMark02",
+			        ["3"] = "riftMark03",
+			        ["4"] = "riftMark04",
+			        ["5"] = "riftMark05",
+			        ["6"] = "riftMark06",
+			        ["7"] = "riftMark07",
+			        ["8"] = "riftMark08",
+			        ["9"] = "riftMark09",
+			        ["10"] = "riftMark10",
+			        ["11"] = "riftMark11",
+			        ["12"] = "riftMark12",
+			        ["13"] = "riftMark13",
+			        ["14"] = "riftMark14",
+			        ["15"] = "riftMark15",
+			        ["16"] = "riftMark16",
+			        ["17"] = "riftMark17",
 			    },
-			    visibilityBinding="mark",alpha=1.0,
+			    visibilityBinding="mark",alpha=0.8,
 			},
 			{
-				-- Generic Element Configuration
 				id="imgReady", type="ImageSet", parent="frameBackdrop", layer=30,
-				attach = {{ point="CENTER", element="frame", targetPoint="CENTER" }}, -- visibilityBinding="id",
-				-- Type Specific Element Configuration
+				attach = {{ point="CENTER", element="frame", targetPoint="CENTER" }},
 				texAddon=AddonId, texFile="img/wtReady.png", nameBinding="readyStatus", cols=1, rows=2, 
 				names = { ["ready"] = 0, ["notready"] = 1 }, defaultIndex = "hide"
 			},
 			{
-				-- Generic Element Configuration
 				id="buffPanelDebuffs", type="BuffPanel", semantic="DebuffPanel", parent="frameBackdrop", layer=30,
 				attach = {{ point="BOTTOMRIGHT", element="barResource", targetPoint="BOTTOMRIGHT", offsetX=-1, offsetY=-6 }},
 				rows=1, cols=6, iconSize=16, iconSpacing=1, borderThickness=1,
@@ -214,14 +240,11 @@ function LifeismysteryGroupFrame:Construct(options)
 	}
 	
 	for idx,element in ipairs(template.elements) do
-		if not options.showAbsorb and element.id == "barAbsorb" then 
-			-- showElement = false
-		elseif element.semantic == "HoTTracker" and not options.showHoTTrackers 
-		then
-			showElement = false	
-		elseif element.semantic == "HoTPanel" and not options.showHoTPanel then
-			-- showElement = false	
-		else 
+	    local showElement = true
+		if not options.showAbsorb and element.id == "barAbsorb" then showElement = false end
+		if element.semantic == "HoTPanel" and not options.showHoTPanel then showElement = false	end
+		if options.excludeCasts and ((element.id == "barCast") or (element.id == "labelCast") or (element.id == "labelTime")) then showElement = false end
+		if showElement then
 			self:CreateElement(element)
 		end
 	end
@@ -260,22 +283,13 @@ function LifeismysteryGroupFrame:Construct(options)
 
 
 
-WT.Unit.CreateVirtualProperty("GroupHealthColor", { "id"},
+WT.Unit.CreateVirtualProperty("GroupHealthColor", { "id", "offline"},
 	function(unit)
-		if unit.id then
+		if unit.offline then
+			return {r=0.07,g=0.07,b=0.09, a=0.85}
+		elseif unit.id then
 			return { r=0.5, g=0, b=0, a=0.8 }
-		else
+		else	
 			return {r=0,g=0,b=0, a=0}
-		end
-	end)	
-	
-WT.Unit.CreateVirtualProperty("BorderColorUnit2", { "id", "aggro" },
-	function(unit)
-		if not unit.id then
-			return { r = 0, g=0, b = 0, a=0 }
-		elseif unit.aggro  then
-			return { r=1, g=0, b =0, a=1 }
-		elseif not unit.aggro and unit.id then
-			return { r = 0, g=0, b = 0, a=1 }
 		end
 	end)
