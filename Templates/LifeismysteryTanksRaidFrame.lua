@@ -6,8 +6,8 @@ local LifeismysteryTanksRaidFrame = WT.UnitFrame:Template("LifeismysteryTanksRai
 LifeismysteryTanksRaidFrame.Configuration.Name = "Lifeismystery Tanks Raid Frame"
 LifeismysteryTanksRaidFrame.Configuration.RaidSuitable = true
 LifeismysteryTanksRaidFrame.Configuration.FrameType = "Frame"
-LifeismysteryTanksRaidFrame.Configuration.Width = 50
-LifeismysteryTanksRaidFrame.Configuration.Height = 20
+LifeismysteryTanksRaidFrame.Configuration.Width = 200
+LifeismysteryTanksRaidFrame.Configuration.Height = 45
 LifeismysteryTanksRaidFrame.Configuration.Resizable = { 55, 40, 500, 70 }
 LifeismysteryTanksRaidFrame.Configuration.SupportsHoTPanel = true
 LifeismysteryTanksRaidFrame.Configuration.SupportsDebuffPanel = true
@@ -38,10 +38,10 @@ function LifeismysteryTanksRaidFrame:Construct(options)
 				},
 				growthDirection="left",
 				binding="healthPercent",
-				backgroundColorRaid={r=0.07, g=0.07, b=0.07, a=0.85},
-                backgroundColorBinding="backgroundColorRaid",				
+				alertHealthColor={r=0.07, g=0.07, b=0.07, a=0.85},
+                backgroundColorBinding="alertHealthColor",				
 				raidHealthColor2={r=0.5,g=0,b=0, a=0.8},
-				colorBinding="TanksHealthColor",				
+				colorBinding="raidHealthColor2",				
 			},
 			{
 				id="healthCap", type="HealthCap", parent="barHealth", layer=15,

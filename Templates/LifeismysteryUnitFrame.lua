@@ -177,7 +177,7 @@ function LifeismysteryUnitFrame:Construct(options)
 				visibilityBinding="name",
 				text="{level}", default="", outline=true, fontSize=14,
 				colorBinding="lvlColor",
-			},
+			},			
 			{
 				id="imgMentor", type="Image", parent="frame", layer=50, width=60, height=30,
 				attach = {{  point="CENTER", element="labellevel", targetPoint="CENTER", offsetX=0, offsetY=-12 }},
@@ -193,6 +193,16 @@ function LifeismysteryUnitFrame:Construct(options)
 						}, 
 				defaultIndex = "hide",
 			},
+			{
+				id="imgRank", type="MediaSet", parent="frame", layer=19, width=50, height=50,
+				attach = {{  point="CENTER", element="labellevel", targetPoint="CENTER", offsetX=0, offsetY=2 }},
+				nameBinding="tier",
+				names ={ 
+						["group"] = "Icon_group", 
+						["raid"] = "Icon_raid"
+						}, 
+				defaultIndex = "hide",
+			},			
 			{
 				id="labelName", type="Label", parent="frame", layer=20,
 				attach = {{ point="CENTERLEFT", element="labellevel", targetPoint="CENTERRIGHT", offsetX=0, offsetY=0 }},
@@ -307,6 +317,7 @@ function LifeismysteryUnitFrame:Construct(options)
 		if element.semantic == "HoTPanel" and not options.showHoTPanel then showElement = false	end
 		if options.excludeCasts and ((element.id == "barCast") or (element.id == "labelCast") or (element.id == "labelTime")) then showElement = false end
 		if not options.showCombo and element.id == "labelCombo" then showElement = false end
+		if not options.showRankIcon and element.id == "imgRank" then showElement = false end
 		if options.shortname == true and element.id == "labelName" then 
 			element.text = "{nameShort}"
 		elseif	options.shortname == false and element.id == "labelName" then 	
