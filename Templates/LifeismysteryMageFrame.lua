@@ -10,7 +10,13 @@ LifeismysteryMageFrame.Configuration.FrameType = "Frame"
 LifeismysteryMageFrame.Configuration.Width = 250
 LifeismysteryMageFrame.Configuration.Height = 40
 LifeismysteryMageFrame.Configuration.Resizable = { 10, 10, 500, 100 }
-
+LifeismysteryMageFrame.Configuration.SupportsOwnBuffsPanel = false
+LifeismysteryMageFrame.Configuration.SupportsOwnDebuffsPanel = false
+LifeismysteryMageFrame.Configuration.SupportsExcludeBuffsPanel = false
+LifeismysteryMageFrame.Configuration.SupportsExcludeCastsPanel = false
+LifeismysteryMageFrame.Configuration.SupportsShowRadius = true
+LifeismysteryMageFrame.Configuration.SupportsShowCombo = true
+LifeismysteryMageFrame.Configuration.SupportsShowRankIconPanel = true
 --------------------------------------------------------------
 function LifeismysteryMageFrame:Construct(options)
 	local template =

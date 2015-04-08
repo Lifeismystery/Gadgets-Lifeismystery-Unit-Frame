@@ -10,7 +10,13 @@ LifeismysteryTargetOfTarget.Configuration.FrameType = "Frame"
 LifeismysteryTargetOfTarget.Configuration.Width = 250
 LifeismysteryTargetOfTarget.Configuration.Height = 40
 LifeismysteryTargetOfTarget.Configuration.Resizable = { 10, 10, 500, 100 }
-
+LifeismysteryTargetOfTarget.Configuration.SupportsOwnBuffsPanel = false
+LifeismysteryTargetOfTarget.Configuration.SupportsOwnDebuffsPanel = false
+LifeismysteryTargetOfTarget.Configuration.SupportsExcludeBuffsPanel = false
+LifeismysteryTargetOfTarget.Configuration.SupportsExcludeCastsPanel = false
+LifeismysteryTargetOfTarget.Configuration.SupportsShowRadius = false
+LifeismysteryTargetOfTarget.Configuration.SupportsShowCombo = false
+LifeismysteryTargetOfTarget.Configuration.SupportsShowRankIconPanel = false
 --------------------------------------------------------------
 function LifeismysteryTargetOfTarget:Construct(options)
 	local template =

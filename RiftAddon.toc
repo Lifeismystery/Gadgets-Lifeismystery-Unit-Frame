@@ -20,6 +20,12 @@ RunOnStartup =
   "templates/LifeismysteryDispel.lua",
   "templates/LifeismysteryMageFrame.lua",
   "templates/LifeismysteryTanksRaidFrame.lua",
+  "templates/LifeismysteryHPFrame.lua",
+  "templates/LifeismysteryManaFrame.lua",
+  "templates/LifeismysteryMiniFrame.lua",  
+  "templates/LifeismysteryMiniTarget.lua",
+  "templates/LifeismysteryRaidFrameMini.lua",  
+  "templates/LifeismysteryRaidFrameDps.lua",  
 }
 
 SavedVariables = 
@@ -34,7 +40,7 @@ Embed =
 
 Dependencies = 
 {
-	Gadgets = {"required", "before"},
+	Gadgets = {"required", "before"}
 }
 -- X-Curse-Packaged-Version: 1.5
 -- X-Curse-Project-Name: Gadgets: Lifeismystery Unit Frame
@@ -45,6 +51,10 @@ Dependencies =
 -- X-Curse-Project-ID: gadgets-lifeismystery-unit-frame
 -- X-Curse-Repository-ID: rift/gadgets-lifeismystery-unit-frame/mainline
 -- X-Curse-Packaged-Version: 1.9
+-- X-Curse-Project-Name: Gadgets: Lifeismystery Unit Frame
+-- X-Curse-Project-ID: gadgets-lifeismystery-unit-frame
+-- X-Curse-Repository-ID: rift/gadgets-lifeismystery-unit-frame/mainline
+-- X-Curse-Packaged-Version: 3.1
 -- X-Curse-Project-Name: Gadgets: Lifeismystery Unit Frame
 -- X-Curse-Project-ID: gadgets-lifeismystery-unit-frame
 -- X-Curse-Repository-ID: rift/gadgets-lifeismystery-unit-frame/mainline

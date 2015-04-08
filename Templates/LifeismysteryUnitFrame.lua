@@ -10,7 +10,13 @@ LifeismysteryUnitFrame.Configuration.FrameType = "Frame"
 LifeismysteryUnitFrame.Configuration.Width = 250
 LifeismysteryUnitFrame.Configuration.Height = 40
 LifeismysteryUnitFrame.Configuration.Resizable = { 10, 10, 500, 100 }
-
+LifeismysteryUnitFrame.Configuration.SupportsOwnBuffsPanel = false
+LifeismysteryUnitFrame.Configuration.SupportsOwnDebuffsPanel = false
+LifeismysteryUnitFrame.Configuration.SupportsExcludeBuffsPanel = false
+LifeismysteryUnitFrame.Configuration.SupportsExcludeCastsPanel = false
+LifeismysteryUnitFrame.Configuration.SupportsShowRadius = true
+LifeismysteryUnitFrame.Configuration.SupportsShowCombo = true
+LifeismysteryUnitFrame.Configuration.SupportsShowRankIconPanel = true
 --------------------------------------------------------------
 function LifeismysteryUnitFrame:Construct(options)
 	local template =

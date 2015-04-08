@@ -5,11 +5,18 @@ local AddonId = toc.identifier
 local LifeismysteryDispel = WT.UnitFrame:Template("LifeismysteryDispel")
 LifeismysteryDispel.Configuration.Name = "Lifeismystery Dispel Frame"
 LifeismysteryDispel.Configuration.RaidSuitable = true
+LifeismysteryDispel.Configuration.UnitSuitable = false
 LifeismysteryDispel.Configuration.FrameType = "Frame"
 LifeismysteryDispel.Configuration.Width = 30
 LifeismysteryDispel.Configuration.Height = 30
 LifeismysteryDispel.Configuration.Resizable = { 30, 30, 30, 30 }
-
+LifeismysteryDispel.Configuration.SupportsOwnBuffsPanel = false
+LifeismysteryDispel.Configuration.SupportsOwnDebuffsPanel = false
+LifeismysteryDispel.Configuration.SupportsExcludeBuffsPanel = false
+LifeismysteryDispel.Configuration.SupportsExcludeCastsPanel = false
+LifeismysteryDispel.Configuration.SupportsShowRadius = false
+LifeismysteryDispel.Configuration.SupportsShowCombo = false
+LifeismysteryDispel.Configuration.SupportsShowRankIconPanel = false
 --------------------------------------------------------------
 function LifeismysteryDispel:Construct(options)
 	local template =

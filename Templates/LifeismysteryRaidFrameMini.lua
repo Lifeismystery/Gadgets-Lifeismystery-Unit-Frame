@@ -2,19 +2,19 @@ local toc, data = ...
 local AddonId = toc.identifier
 
 -- Frame Configuration Options --------------------------------------------------
-local LifeismysteryRaidFrame = WT.UnitFrame:Template("LifeismysteryRaidFrame")
-LifeismysteryRaidFrame.Configuration.Name = "Lifeismystery Raid Frame"
-LifeismysteryRaidFrame.Configuration.RaidSuitable = true
-LifeismysteryRaidFrame.Configuration.UnitSuitable = false
-LifeismysteryRaidFrame.Configuration.FrameType = "Frame"
-LifeismysteryRaidFrame.Configuration.Width = 50
-LifeismysteryRaidFrame.Configuration.Height = 20
-LifeismysteryRaidFrame.Configuration.Resizable = { 55, 40, 500, 70 }
-LifeismysteryRaidFrame.Configuration.SupportsHoTPanel = true
-LifeismysteryRaidFrame.Configuration.SupportsDebuffPanel = true
+local LifeismysteryRaidFrameMini = WT.UnitFrame:Template("LifeismysteryRaidFrameMini")
+LifeismysteryRaidFrameMini.Configuration.Name = "Lifeismystery Raid Frame MiniUI"
+LifeismysteryRaidFrameMini.Configuration.RaidSuitable = true
+LifeismysteryRaidFrameMini.Configuration.UnitSuitable = false
+LifeismysteryRaidFrameMini.Configuration.FrameType = "Frame"
+LifeismysteryRaidFrameMini.Configuration.Width = 50
+LifeismysteryRaidFrameMini.Configuration.Height = 20
+LifeismysteryRaidFrameMini.Configuration.Resizable = { 55, 40, 500, 70 }
+LifeismysteryRaidFrameMini.Configuration.SupportsHoTPanel = true
+LifeismysteryRaidFrameMini.Configuration.SupportsDebuffPanel = true
 
 --------------------------------------------------------------
-function LifeismysteryRaidFrame:Construct(options)
+function LifeismysteryRaidFrameMini:Construct(options)
 	local template =
 	{
 		elements = 
@@ -43,8 +43,8 @@ function LifeismysteryRaidFrame:Construct(options)
                 --backgroundColorBinding="backgroundColorRaid",	
 				alertHealthColor={r=0.07, g=0.07, b=0.07, a=0.85},
                 backgroundColorBinding="alertHealthColor",				
-				raidHealthColor2={r=0.5,g=0,b=0, a=0.8},
-				colorBinding="raidHealthColor2",					
+				raidHealthColorMini={r=1,g=1,b=1, a=0.8},
+				colorBinding="raidHealthColorMini",					
 			},
 			{
 				id="healthCap", type="HealthCap", parent="barHealth", layer=15,
@@ -99,7 +99,7 @@ function LifeismysteryRaidFrame:Construct(options)
 				attach = {{ point="CENTER", element="frame", targetPoint="CENTER", offsetX=0, offsetY=3 }},
 				visibilityBinding="name",
 				text="{nameShort}", maxLength=10, default="", outline=true,
-				colorBinding="NameColor",
+				colorBinding="NameColor", font = "Enigma",
 			},
 			{
 				id="labelStatus", type="Label", parent="frame", layer=20,
@@ -213,8 +213,8 @@ function LifeismysteryRaidFrame:Construct(options)
 		function(el)
 			local newWidth = self:GetWidth()
 			local newHeight = self:GetHeight()
-			local fracWidth = newWidth / LifeismysteryRaidFrame.Configuration.Width
-			local fracHeight = newHeight / LifeismysteryRaidFrame.Configuration.Height
+			local fracWidth = newWidth / LifeismysteryRaidFrameMini.Configuration.Width
+			local fracHeight = newHeight / LifeismysteryRaidFrameMini.Configuration.Height
 			local fracMin = math.min(fracWidth, fracHeight)
 			local fracMax = math.max(fracWidth, fracHeight)
 			local labName = self.Elements.labelName
@@ -238,12 +238,12 @@ function LifeismysteryRaidFrame:Construct(options)
  end  
 	
 	
-WT.Unit.CreateVirtualProperty("raidHealthColor2", { "id", "offline"},
+WT.Unit.CreateVirtualProperty("raidHealthColorMini", { "id", "offline"},
 	function(unit)
 		if unit.offline then
-			return {r=0.07,g=0.07,b=0.09, a=0.85}
+			return {r=0.07,g=0.07,b=0.09, a=0.75}
 		elseif unit.id then
-			return { r=0.5, g=0, b=0, a=0.8 }
+			return { r=1, g=1, b=1, a=0.8 }
 		else	
 			return {r=0,g=0,b=0, a=0}
 		end

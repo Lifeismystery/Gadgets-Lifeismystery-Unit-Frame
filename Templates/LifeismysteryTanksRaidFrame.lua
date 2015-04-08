@@ -5,6 +5,7 @@ local AddonId = toc.identifier
 local LifeismysteryTanksRaidFrame = WT.UnitFrame:Template("LifeismysteryTanksRaidFrame")
 LifeismysteryTanksRaidFrame.Configuration.Name = "Lifeismystery Tanks Raid Frame"
 LifeismysteryTanksRaidFrame.Configuration.RaidSuitable = true
+LifeismysteryTanksRaidFrame.Configuration.UnitSuitable = false
 LifeismysteryTanksRaidFrame.Configuration.FrameType = "Frame"
 LifeismysteryTanksRaidFrame.Configuration.Width = 200
 LifeismysteryTanksRaidFrame.Configuration.Height = 45
