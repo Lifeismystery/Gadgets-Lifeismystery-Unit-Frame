@@ -20,7 +20,8 @@ LifeismysteryMiniFrame.Configuration.SupportsShowRankIconPanel = false
 
 --------------------------------------------------------------
 function LifeismysteryMiniFrame:Construct(options)
-local newWidth2 = options.width
+
+local newWidth2 = options.width or LifeismysteryMiniFrame.Configuration.Width 
 
 	local template =
 	{
