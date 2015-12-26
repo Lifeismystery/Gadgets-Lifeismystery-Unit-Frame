@@ -43,7 +43,7 @@ function LifeismysteryRaidFrame:Construct(options)
                 --backgroundColorBinding="backgroundColorRaid",	
 				alertHealthColor={r=0.07, g=0.07, b=0.07, a=0.85},
                 backgroundColorBinding="alertHealthColor",				
-				raidHealthColor2={r=0.5,g=0,b=0, a=0.8},
+				raidHealthColor2={r=0.5,g=0,b=0, a=0.7},
 				colorBinding="raidHealthColor2",					
 			},
 			{
@@ -176,6 +176,8 @@ function LifeismysteryRaidFrame:Construct(options)
 				rows=1, cols=6, iconSize=16, iconSpacing=1, borderThickness=1,
 				auraType="debuff", 
 				growthDirection = "left_up",
+				rejectBuffs= options.BlackListDebuff,
+				acceptBuffs = options.WhiteListDebuff,
 				--timer = true, timerSize = 14, outline=true, 
 				color={r=1,g=1,b=0,a=1},
 				stack = true, stackSize = 15, outline=true,
@@ -185,6 +187,8 @@ function LifeismysteryRaidFrame:Construct(options)
 				attach = {{ point="TOPRIGHT", element="frameBackdrop", targetPoint="TOPRIGHT", offsetX=-1, offsetY=3 }},
 				rows=1, cols=6, iconSize=16, iconSpacing=0, borderThickness=1,
 				auraType="hot",selfCast=true, 
+				rejectBuffs= options.BlackListHots,
+				acceptBuffs = options.WhiteListHots,
 				timer = true, timerSize = 11, outline=true, color={r=1,g=1,b=0,a=1}, 
 				stack = true, stackSize = 12, outline=true,
 				growthDirection = "left_up",
@@ -243,7 +247,11 @@ WT.Unit.CreateVirtualProperty("raidHealthColor2", { "id", "offline"},
 		if unit.offline then
 			return {r=0.07,g=0.07,b=0.09, a=0.85}
 		elseif unit.id then
-			return { r=0.5, g=0, b=0, a=0.8 }
+			if wtxGadgets.RaidFrames1 then
+				if wtxGadgets.RaidFrames1.colHealthBackground and wtxGadgets.RaidFrames1.ovHealthBackgroundColor then
+					return {r=wtxGadgets.RaidFrames1.colHealthBackground[1],g=wtxGadgets.RaidFrames1.colHealthBackground[2],b=wtxGadgets.RaidFrames1.colHealthBackground[3],a=wtxGadgets.RaidFrames1.colHealthBackground[4]}
+				else return { r=0.5, g=0, b=0, a=0.8 } end
+			end
 		else	
 			return {r=0,g=0,b=0, a=0}
 		end

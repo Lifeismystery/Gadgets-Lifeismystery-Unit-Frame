@@ -15,6 +15,7 @@ LifeismysteryRaidFrameMini.Configuration.SupportsDebuffPanel = true
 
 --------------------------------------------------------------
 function LifeismysteryRaidFrameMini:Construct(options)
+
 	local template =
 	{
 		elements = 
@@ -177,6 +178,8 @@ function LifeismysteryRaidFrameMini:Construct(options)
 				auraType="debuff", 
 				growthDirection = "left_up",
 				--timer = true, timerSize = 14, outline=true, 
+				rejectBuffs= options.BlackListDebuff,
+				acceptBuffs = options.WhiteListDebuff,
 				color={r=1,g=1,b=0,a=1},
 				stack = true, stackSize = 15, outline=true,
 			},
@@ -188,6 +191,8 @@ function LifeismysteryRaidFrameMini:Construct(options)
 				timer = true, timerSize = 11, outline=true, color={r=1,g=1,b=0,a=1}, 
 				stack = true, stackSize = 12, outline=true,
 				growthDirection = "left_up",
+				rejectBuffs = options.BlackListHots,
+				acceptBuffs = options.WhiteListHots,
 			},
 			
 		}
